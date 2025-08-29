@@ -9,7 +9,8 @@ import './style.css'
 //import './topics/03.1-funciones-con-objectos-argumentos'
 //import './topics/04-homework-types'
 //import './topics/05-basic-destructuring-objects';
-import './topics/05.1-basic-destructuring-areglos';
+//import './topics/05.1-basic-destructuring-areglos';
+import './topics/06-function-destructuring';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
