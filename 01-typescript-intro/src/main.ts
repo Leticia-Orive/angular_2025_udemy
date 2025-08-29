@@ -11,7 +11,8 @@ import './style.css'
 //import './topics/05-basic-destructuring-objects';
 //import './topics/05.1-basic-destructuring-areglos';
 //import './topics/06-function-destructuring';
-import './topics/06.1-tarea-funcion-destructuring';
+//import './topics/06.1-tarea-funcion-destructuring';
+import './topics/07-import-export';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 

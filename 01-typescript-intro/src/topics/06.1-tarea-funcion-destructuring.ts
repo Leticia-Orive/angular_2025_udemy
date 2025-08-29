@@ -35,7 +35,7 @@ function taxCalculation({ tax, products }: TaxCalculationOptions): number[] {
 }
 */
 /**Esta es la mejor forma de destructurar */
-function taxCalculation(options: TaxCalculationOptions): [number, number] {
+export function taxCalculation(options: TaxCalculationOptions): [number, number] {
     //const { tax, products } = options;
     let total = 0;
     options.products.forEach(({ price }) => {
@@ -58,4 +58,3 @@ console.log('Total', total); // Mostramos el total
 console.log('Tax', taxAmount); // Mostramos el impuesto
 
 // Exportación vacía para convertir el archivo en un módulo
-export {};
