@@ -12,7 +12,8 @@ import './style.css'
 //import './topics/05.1-basic-destructuring-areglos';
 //import './topics/06-function-destructuring';
 //import './topics/06.1-tarea-funcion-destructuring';
-import './topics/07-import-export';
+//import './topics/07-import-export';
+import './topics/08-classes';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
