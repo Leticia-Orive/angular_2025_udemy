@@ -14,8 +14,8 @@ import './style.css'
 //import './topics/06.1-tarea-funcion-destructuring';
 //import './topics/07-import-export';
 //import './topics/08-classes';
-import './topics/08.1-classes-constructor';
-import './topics/08-classes';
+//import './topics/08.1-classes-constructor';
+import './topics/08.2-clases-herencia';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
