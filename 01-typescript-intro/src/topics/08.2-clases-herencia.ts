@@ -21,14 +21,21 @@ export class Person {
   
 }
 export class Hero extends Person {
+    public alterEgo: string;
+    public age: number;
+    public realName: string;
+
     constructor(
-        public alterEgo: string,
-        public age: number,
-        public realName: string,
+        alterEgo: string,
+        age: number,
+        realName: string,
     ) {
         //super: funcion especial que le indica .ts que tiene que llamar al
     //constructor padre
         super(realName, 'New York');
+        this.alterEgo = alterEgo;
+        this.age = age;
+        this.realName = realName;
     }
     
     
