@@ -16,7 +16,8 @@ import './style.css'
 //import './topics/08-classes';
 //import './topics/08.1-classes-constructor';
 //import './topics/08.2-clases-herencia';
-import './topics/08.3-clases-priorizar-herencia';
+//import './topics/08.3-clases-priorizar-herencia';
+import './topics/09-generics';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
