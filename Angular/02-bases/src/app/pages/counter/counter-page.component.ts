@@ -5,12 +5,8 @@ import { Component } from "@angular/core";
 
 @Component({
   selector: 'app-counter',
-  template: `
-  <h1> Counter: {{ counter }}</h1>
-  <button (click)="incrementarOne(1)">+1</button>
-  `,
-
-
+  templateUrl: './counter-page.component.html',
+  styles: './counter-page.component.css'
 })
 export class CounterPageComponent {
 
@@ -24,5 +20,9 @@ export class CounterPageComponent {
     this.counter = this.counter + value;
     //esta es otra manera de incrementar el contador
     this.counter += value;
+  }
+
+  resetCounter() {
+    this.counter = 10;
   }
 }
