@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 
 
 
@@ -6,12 +6,13 @@ import { Component } from "@angular/core";
 @Component({
   selector: 'app-counter',
   templateUrl: './counter-page.component.html',
-  styles: './counter-page.component.css'
+  styleUrls: ['./counter-page.component.css']
 })
 export class CounterPageComponent {
 
   //valor de un contador
   counter = 10;
+  counterSignal = signal(10)
 
   //Metodos
   incrementarOne(value: number) {
@@ -20,9 +21,14 @@ export class CounterPageComponent {
     this.counter = this.counter + value;
     //esta es otra manera de incrementar el contador
     this.counter += value;
+
+    //incrementa el signal del contador
+    //this.counterSignal.set( this.counterSignal() + value );
+    this.counterSignal.update( (current) => current + value );
   }
 
   resetCounter() {
-    this.counter = 10;
+    this.counter = 0;
+    this.counterSignal.set(0);
   }
 }
