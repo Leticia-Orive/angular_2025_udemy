@@ -17,6 +17,9 @@ interface Character {
 
 })
 export class DragonballComponent {
+  //Creamos dos señales independientes
+  name = signal('Gohan');
+  power = signal(100);
 
   characters = signal<Character[]>([
     { id: 1, name: 'Goku', power: 9001 },

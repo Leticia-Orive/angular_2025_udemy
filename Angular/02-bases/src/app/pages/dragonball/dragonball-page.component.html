@@ -4,11 +4,27 @@
 
 <section class="row">
   <div class="col-12 col-sm-6">
-    <h3>Agregar:</h3>
-    <input type="text" class="form-control" placeholder="Nombre" />
+    <h3>Agregar: {{ name() }}</h3>
+
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Nombre"
+      [value]="name()"
+      (change)="name.set(txtName.value)"
+      (input)="name.set(txtName.value)"
+      #txtName
+      />
+      <!--Cuando quieres asignar el valor a un atributo y ese atributo viene
+      de alguna variable o señal a algo por el estilo lo que se pone es llaves
+      cuadradas que van apuntar al valor que tenga "name"
+      [value]="name()"-->
+      <!--(change) es un evento o control que se dispara cuando el valor del input cambia-->
+
+    <h3>{{ power() }}</h3>
     <input type="number" class="form-control mt-2" placeholder="Poder" />
 
-    <button class="mt-2 btn btn-primary">Agregar</button>
+    <button (click)="addCharacter()" class="mt-2 btn btn-primary">Agregar</button>
   </div>
 
   <div class="col-12 col-sm-6">
