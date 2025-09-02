@@ -13,5 +13,6 @@ export class CharacterListComponent {
    * la manera que se recomienda es usando una funcion Input
    */
   characters = input.required<Character[]>();
+  listName = input.required<string>();
 
  }
