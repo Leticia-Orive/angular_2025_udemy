@@ -30,27 +30,13 @@ export class DragonballSuperPageComponent {
 
   ])
 
- addCharacter() {
-  //condicion: si no hay nombre o poder o el poder es menor o igual a 0, NO se añade el personaje
-  if(!this.name() || !this.power() || this.power() <= 0) {
+ addCharacter(character: Character) {
+  this.characters.update(
+    (list) => [...list, character]
+  );
 
-    return;
   }
-  //PERO SI TENEMOS PODER (numero), añadimos un nuevo personaje al array de personajes
-    //crea un nuevo objeto de tipo Character que lo asigna a la constante newCharacter con los valores de name y power
-  const newCharacter: Character = {
-    id: this.characters().length + 1,
-    name: this.name(),
-    power: this.power()
-  };
 
-
-//añade el nuevo personaje al array de personajes y visualiza en memoria no fijo
-    //this.characters().push(newCharacter);
-
-  this.characters.update(list => [...list, newCharacter]);
-  this.resetFields();
- }
 
 
  resetFields(){
