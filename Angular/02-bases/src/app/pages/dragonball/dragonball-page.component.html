@@ -21,7 +21,13 @@
           <!--Para que empiece en 1 ponemos:
           <span>{{idx + 1}} - {{ character.name }}</span>
           -->
-          <strong class="text-danger"> ({{ character.power }})</strong>
+          <!--powerClasses es solo una clase de lectura
+                    [ngClass]="powerClasses()"-->
+          <strong
+           [class.text-danger]="character.power > 9000"
+          [class.text-info]="character.power < 9000">
+
+           ({{ character.power }})</strong>
         </li>
       }
     </ul>
