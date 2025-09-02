@@ -12,5 +12,10 @@ export const routes: Routes = [
   {
     path: 'hero',
     component: HeroPageComponent
+  },
+  //redirect vacio
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
