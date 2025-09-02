@@ -15,12 +15,6 @@
       (input)="name.set(txtName.value)"
       #txtName
       />
-      <!--Cuando quieres asignar el valor a un atributo y ese atributo viene
-      de alguna variable o señal a algo por el estilo lo que se pone es llaves
-      cuadradas que van apuntar al valor que tenga "name"
-      [value]="name()"-->
-      <!--(change) es un evento o control que se dispara cuando el valor del input cambia-->
-
 
     <input
       type="number"
@@ -35,30 +29,9 @@
   </div>
 
   <div class="col-12 col-sm-6">
-    <h3>Listado fuertes:</h3>
-    <ul>
-      <!--for nos permite barrer el elemento de una manera bien agradable-->
-      @for (character of characters(); track character.id; let idx = $index) {
-        <!--Hay varias formas para oculta una de ellas es el *ngIf pero la mas
-        recomendada de usar es @if-->
-        @if(character.power > 500) {
-          <li>
-            <span> {{idx}} - {{ character.name }}</span>
-            <!--Para que empiece en 1 ponemos:
-          <span>{{idx + 1}} - {{ character.name }}</span>
-          -->
-            <!--powerClasses es solo una clase de lectura
-                    [ngClass]="powerClasses()"-->
-            <strong
-             [class.text-danger]="character.power > 9000"
-            [class.text-info]="character.power < 9000">
 
-             ({{ character.power }})</strong>
-          </li>
-        }@else {
-          <li><strong>Aqui no hay personajes fuertes</strong></li>
-        }
-      }
-    </ul>
+    <dragonball-character-list [characters]="characters()" />
+
+
   </div>
 </section>
