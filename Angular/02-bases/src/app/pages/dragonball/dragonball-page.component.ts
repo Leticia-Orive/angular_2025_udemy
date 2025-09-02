@@ -22,7 +22,8 @@ export class DragonballComponent {
     { id: 1, name: 'Goku', power: 9001 },
     { id: 2, name: 'Vegeta', power: 8000 },
     { id: 3, name: 'Gohan', power: 4000 },
-    { id: 4, name: 'Trunks', power: 3000 },
+    { id: 4, name: 'Trunks', power: 500 },
+    { id: 5, name: 'Piccolo', power: 3000 }
   ])
 //Series de clases
 //Tambien se puede hacer con un signal

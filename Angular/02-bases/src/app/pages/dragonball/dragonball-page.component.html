@@ -12,23 +12,29 @@
   </div>
 
   <div class="col-12 col-sm-6">
-    <h3>Listado:</h3>
+    <h3>Listado fuertes:</h3>
     <ul>
       <!--for nos permite barrer el elemento de una manera bien agradable-->
       @for (character of characters(); track character.id; let idx = $index) {
-        <li>
-          <span> {{idx}} - {{ character.name }}</span>
-          <!--Para que empiece en 1 ponemos:
+        <!--Hay varias formas para oculta una de ellas es el *ngIf pero la mas
+        recomendada de usar es @if-->
+        @if(character.power > 500) {
+          <li>
+            <span> {{idx}} - {{ character.name }}</span>
+            <!--Para que empiece en 1 ponemos:
           <span>{{idx + 1}} - {{ character.name }}</span>
           -->
-          <!--powerClasses es solo una clase de lectura
+            <!--powerClasses es solo una clase de lectura
                     [ngClass]="powerClasses()"-->
-          <strong
-           [class.text-danger]="character.power > 9000"
-          [class.text-info]="character.power < 9000">
+            <strong
+             [class.text-danger]="character.power > 9000"
+            [class.text-info]="character.power < 9000">
 
-           ({{ character.power }})</strong>
-        </li>
+             ({{ character.power }})</strong>
+          </li>
+        }@else {
+          <li><strong>Aqui no hay personajes fuertes</strong></li>
+        }
       }
     </ul>
   </div>
