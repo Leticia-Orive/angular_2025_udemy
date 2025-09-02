@@ -13,11 +13,17 @@
 
   <div class="col-12 col-sm-6">
     <h3>Listado:</h3>
-    <ol>
-      <li>Goku</li>
-      <li>Vegeta</li>
-      <li>Gohan</li>
-      <li>Trunks</li>
-    </ol>
+    <ul>
+      <!--for nos permite barrer el elemento de una manera bien agradable-->
+      @for (character of characters(); track character.id; let idx = $index) {
+        <li>
+          <span> {{idx}} - {{ character.name }}</span>
+          <!--Para que empiece en 1 ponemos:
+          <span>{{idx + 1}} - {{ character.name }}</span>
+          -->
+          <strong class="text-danger"> ({{ character.power }})</strong>
+        </li>
+      }
+    </ul>
   </div>
 </section>

@@ -1,4 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
+
+
+interface Character {
+  id:number;
+  name: string;
+  power: number;
+}
 
 @Component({
   selector: 'app-dragonball',
@@ -6,5 +13,12 @@ import { Component } from "@angular/core";
 
 })
 export class DragonballComponent {
+
+  characters = signal<Character[]>([
+    { id: 1, name: 'Goku', power: 15000 },
+    { id: 2, name: 'Vegeta', power: 14000 },
+    { id: 3, name: 'Gohan', power: 13000 },
+    { id: 4, name: 'Trunks', power: 12000 },
+  ])
 
 }
