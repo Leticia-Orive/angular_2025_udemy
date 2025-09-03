@@ -20,33 +20,16 @@ import { DragonballService } from '../../services/dragonball.service';
 })
 export class DragonballSuperPageComponent {
 
-
-  //injectar mi servicio hay dos formas
-  /**1-forma
-  constructor(
-    public dragonballService = DragonballService) { }*/
-
-  /**2-forma */
+  // Inyectar el servicio usando la forma recomendada
   public DragonballService = inject(DragonballService);
 
+  // Exponer la propiedad characters para el template
+  public characters = this.DragonballService.characters;
 
-
-//2- inicializar el array de personajes de dragonball interface con signal
-  /*characters = signal<Character[]>([
-    { id: 1, name: 'Goku', power: 9001 },
-    { id: 2, name: 'Vegeta', power: 8000 },
-
-  ])
-
- addCharacter(character: Character) {
-  this.characters.update(
-    (list) => [...list, character]
-  );
-
+  // Exponer el método addCharacter para el template
+  public addCharacter(character: any) {
+    this.DragonballService.addCharacter(character);
   }
-addCharacter(character: Character) {
-  this.dragonballService.addCharacter(character);
-}*/
 
 }
 
