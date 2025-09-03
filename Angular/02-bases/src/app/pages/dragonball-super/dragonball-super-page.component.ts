@@ -34,3 +34,4 @@ export class DragonballSuperPageComponent {
 }
 
 
+//esto es parte de lo corregido
