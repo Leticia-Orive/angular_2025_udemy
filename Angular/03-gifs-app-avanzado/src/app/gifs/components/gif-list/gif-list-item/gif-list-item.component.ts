@@ -4,7 +4,7 @@ import { Component, input } from '@angular/core';
   selector: 'app-gif-list-item',
   imports: [],
   templateUrl: './gif-list-item.component.html',
-  styleUrl: './gif-list-item.component.scss'
+
 })
 export class GifListItemComponent {
 

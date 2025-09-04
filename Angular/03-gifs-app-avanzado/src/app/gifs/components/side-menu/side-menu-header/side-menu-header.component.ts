@@ -6,7 +6,7 @@ import { environment } from '@environments/environment';
   selector: 'app-side-menu-header',
   imports: [],
   templateUrl: './side-menu-header.component.html',
-  styleUrl: './side-menu-header.component.scss'
+
 })
 export class SideMenuHeaderComponent {
 
