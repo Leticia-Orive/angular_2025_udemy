@@ -1,6 +1,7 @@
-import { Gif } from '../interfaces/gif.interface';
-import { GiphyItem } from '../interfaces/giphy.interfaces';
-export class GifMapper {
+import { Gif } from "../interfaces/gif.interface";
+import { GiphyItem } from '../interfaces/giphy.interface';
+
+export class GifMapper{
   static mapGiphyItemToGif(item: GiphyItem): Gif {
     return {
       id: item.id,
