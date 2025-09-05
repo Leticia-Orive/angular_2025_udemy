@@ -4,6 +4,7 @@ import { environment } from "@environments/environment";
 import { GiphyResponse } from "../interfaces/giphy.interface";
 import { Gif } from "../interfaces/gif.interface";
 import { GifMapper } from "../mapper/gif..mapper";
+import { map } from "rxjs";
 
 @Injectable ({
   providedIn: 'root'
@@ -43,19 +44,24 @@ export class GifService {
   }
 
   //Creamos otro metodo para buscar gifs
-  searchGifs(query: string){
-   this.http
+   searchGifs(query: string){
+   return this.http
       .get<GiphyResponse>(`${environment.giphyUrl}/gifs/search`, {
         params: {
           api_key: environment.giphyApiKey,
           limit: 20,
           q: query,
         },
-      })
-      .subscribe((resp) => {
+      }).pipe(
+  map(({ data }) => GifMapper.mapGiphyItemsToGifArray(data)),
+
+  //TODO hISTORIAL
+
+      );
+      /** .subscribe((resp) => {
         const gifs = GifMapper.mapGiphyItemsToGifArray(resp.data);
         console.log({ search: gifs });
-      });
+      });*/
   }
 
 }
