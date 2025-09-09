@@ -4,7 +4,7 @@ import { environment } from '@environments/environment';
 import { GiphyResponse } from '../interfaces/giphy.interface';
 import { Gif } from '../interfaces/gif.interface';
 import { GifMapper } from '../mapper/gif..mapper';
-import { map, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
 //Objecto literal
 // {
@@ -57,7 +57,7 @@ export class GifService {
   }
 
   //Creamos otro metodo para buscar gifs
-  searchGifs(query: string) {
+  searchGifs(query: string):Observable<Gif[]> {
     return this.http
       .get<GiphyResponse>(`${environment.giphyUrl}/gifs/search`, {
         params: {
@@ -82,5 +82,9 @@ export class GifService {
         const gifs = GifMapper.mapGiphyItemsToGifArray(resp.data);
         console.log({ search: gifs });
       });*/
+  }
+  //Creamos un metodo para obtener los gifs del historial
+  getHistoryGifs(query: string): Gif[] {
+    return this.searchHistory()[query] ?? [];
   }
 }
