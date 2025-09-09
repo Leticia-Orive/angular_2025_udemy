@@ -20,6 +20,12 @@ export const routes: Routes = [
         //loadComponent(carga diferida) es una función que retorna una promesa. de esta forma hacemos una importación del componente de forma dinámica,
         loadComponent: () => import('./gifs/pages/search-page/search-page.component'),
       },
+      {
+        path: 'history/:query',
+        //loadComponent(carga diferida) es una función que retorna una promesa. de esta forma hacemos una importación del componente de forma dinámica,
+        loadComponent: () => import('./gifs/pages/git-history/git-history.component'),
+      },
+
 
       {
         path: '**',
@@ -35,7 +41,7 @@ export const routes: Routes = [
         //redirección a la ruta dashboard
         redirectTo: 'dashboard'
       },
-      
-    
-  
+
+
+
 ];
