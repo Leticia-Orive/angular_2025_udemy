@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "05-country-app": {
+    "05-app-country": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -56,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "05-country-app:build:production"
+              "buildTarget": "05-app-country:build:production"
             },
             "development": {
-              "buildTarget": "05-country-app:build:development"
+              "buildTarget": "05-app-country:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -88,5 +88,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "cc2b0484-010d-4596-baab-838d379593e6"
   }
 }
