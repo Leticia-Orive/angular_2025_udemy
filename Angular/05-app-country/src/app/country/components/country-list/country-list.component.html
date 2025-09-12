@@ -26,9 +26,10 @@
           </td>
           <td>{{country.name}}</td>
           <td>{{country.capital}}</td>
-          <td>{{country.population}}</td>
           <td>
-            <a class="link-primary">Mas información</a>
+            <span class="badge badge-secondary">{{country.population | number}}</span></td>
+          <td>
+            <a class="link-primary cursor-pointer">Mas información</a>
           </td>
         </tr>
       }
