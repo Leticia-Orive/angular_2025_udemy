@@ -27,5 +27,17 @@ export class CountryService {
     );
     //voy a usar los operadores de rxjs
   }
+  searchByCountry(query: string) {
+    const url = `${API_URL}/name/${query}`;
+    query = query.toLowerCase();
 
+    return this.http.get<RESTCountry[]>(url).pipe(
+      map(resp => CountryMapper.mapRestCountryArrayToCountryArray(resp)),
+      catchError(error => {
+        console.log('Error fetching', error);
+        return throwError(() => new Error(`No se pudo obtener paises con ese query ${query}`));
+      })
+    );
+  }
 }
+
