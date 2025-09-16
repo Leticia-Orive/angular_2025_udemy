@@ -27,15 +27,15 @@ export const countryRoutes: Routes = [
         path: 'by-region',
         component: ByRegionPageComponent
       },
-
+      {
+        path: 'by/:code',
+        component: CountryPageComponent
+      },
       {
         path: '**',
         redirectTo: 'by-capital'
       },
-      {
-        path: 'by/:code',
-        component: CountryPageComponent
-      }
+
     ]
   },
   //{
