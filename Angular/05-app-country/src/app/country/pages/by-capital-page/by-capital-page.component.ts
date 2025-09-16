@@ -6,18 +6,30 @@ import { CountryService } from '../../services/country.service';
 
 import { Country } from '../../interfaces/country.interface';
 //import { CountryMapper } from '../../mappers/country.mapper';
-import { count, first } from 'rxjs';
+import { count, first, of } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
+
 
 @Component({
   selector: 'app-by-capital-page',
-  imports: [SearchInputComponent, SearchInputComponent, CountryListComponent],
+  imports: [SearchInputComponent, CountryListComponent],
   templateUrl: './by-capital-page.component.html',
 })
 export class ByCapitalPageComponent {
   //Injectamos el servicio
   CountryService = inject(CountryService);
   query = signal('');
+
+  // 'request' no es una propiedad válida en rxResource. Debes usar 'params' para pasar datos reactivos.
+  // Usamos rxResource pasando solo la función que retorna el observable, evitando errores de sobrecarga.
+ /**  countryResource = rxResource({
+    request: () => ({ query: this.query() }),
+    loader:({ request }) => {
+      if (!request.query) return of([]);
+      return this.CountryService.searchByCapital(request.query);
+    }
+  })*/
 
   // No se puede usar 'request' porque la API de resource de Angular solo acepta 'params' para pasar parámetros reactivos al loader.
   // 'request' no es una propiedad reconocida y causa error de tipos.
