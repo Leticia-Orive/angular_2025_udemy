@@ -24,4 +24,33 @@
     <div class="stat-desc">{{ fullName() }}</div>
   </div>
 </div>
+<div class="divider"></div>
+
+<div class="flex flex-row  gap-x-12  shadow w-full">
+  <div class="stat">
+    <div class="stat-title">Date Pipe</div>
+    <div class="stat-value">{{ customDate() | date }}</div>
+    <div class="stat-desc">{{ customDate() }}</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-title">Date|long|GMT-6</div>
+    <div class="stat-value">{{ customDate() | date : "long" : "GMT-6" }}</div>
+    <div class="stat-desc">{{ customDate() }}</div>
+  </div>
+</div>
+<div class="flex flex-row  gap-x-12  shadow w-full">
+  <div class="stat">
+    <div class="stat-title">Date:'yyyy MM'</div>
+    <div class="stat-value">{{ customDate() | date : "yyyy MM" }}</div>
+    <div class="stat-desc">{{ customDate() }}</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-title">Date|short|GMT-64</div>
+    <div class="stat-value">{{ customDate() | date : "short" : "GMT-4" }}</div>
+    <div class="stat-desc">{{ customDate() }}</div>
+  </div>
+</div>
+
 
