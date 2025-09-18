@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CardComponent } from '../../components/card/card.component';
-import { I18nPluralPipe, I18nSelectPipe, SlicePipe } from '@angular/common';
+import { I18nPluralPipe, I18nSelectPipe, JsonPipe, SlicePipe, UpperCasePipe } from '@angular/common';
 
 //Me creo dos clientes
 const client1 = { name: 'Leticia', gender: 'female', age: 31, address: 'Calle Luna Calle Sol' };
@@ -8,7 +8,7 @@ const client2 = { name: 'Cristian', gender: 'male', age: 37, address: 'Calle Sol
 
 @Component({
   selector: 'app-uncommon-page',
-  imports: [CardComponent, I18nSelectPipe, I18nPluralPipe, SlicePipe],
+  imports: [CardComponent, I18nSelectPipe, I18nPluralPipe, SlicePipe, JsonPipe, UpperCasePipe],
   templateUrl: './uncommon-page.component.html',
 
 })
