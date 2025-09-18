@@ -10,6 +10,7 @@ import {
   TitleCasePipe,
   UpperCasePipe,
 } from '@angular/common';
+import { interval, map, tap} from 'rxjs';
 
 //Me creo dos clientes
 const client1 = {
@@ -39,6 +40,7 @@ const client2 = {
     AsyncPipe,
   ],
   templateUrl: './uncommon-page.component.html',
+
 })
 export default class UncommonPageComponent {
   //Creo una señal
@@ -95,6 +97,7 @@ export default class UncommonPageComponent {
   };
 
   //Async Pipe para que funcione necesito algo asincrono trabaja con observables y promesas
+  //esta hecho con promesas
   promiseValue: Promise<string> = new Promise((resolve, reject) => {
     setTimeout(() => {
       reject('Tenemos un error en la data');
@@ -102,4 +105,10 @@ export default class UncommonPageComponent {
       console.log('Tenemos data en la promesa');
     }, 3500);
   });
+
+  //Async Pipe con Observables
+  myObservableTimer = interval(2000).pipe(
+    map((value) => value + 1),
+    tap((value) => console.log('tap:', value))
+  );
 }

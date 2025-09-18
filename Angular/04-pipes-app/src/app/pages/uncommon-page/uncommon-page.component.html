@@ -80,9 +80,20 @@ objecto en pantalla y es buena para hacer depuraciones -->
     <p class="text-primary">{{ promiseValue | async }}</p>
     @if (promiseValue | async; as value ) {
       <p class="text-primary">{{ value }}</p>
+    }
       <!--Pongo esto para que no me funcione--->
-    }@else {
+    @else {
       <p class="text-accent">Espere por favor...</p>
+    }
+
+    <!--Async Pipe con Observables-->
+    <h3 class="text-2xl">Observable</h3>
+    <p class="text-primary">{{ myObservableTimer | async }}</p>
+
+    @if( myObservableTimer | async; as value ) {
+      <p class="text-primary">Valor: {{ value }}</p>
+    }@else {
+      <p>Esperando primer valor</p>
     }
 
   </app-card>
