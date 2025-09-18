@@ -4,22 +4,52 @@
 </section>
 
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-col-3 gap-4">
-
   <app-card title="i18nSelectPipe">
-    <p>Saludos {{client().name}}, es un placer {{client().gender | i18nSelect: invitationMap}} a nuestro evento</p>
-    <button (click)="changeClient()" class="btn btn-primary">Cambiar cliente</button>
+    <p>
+      Saludos {{ client().name }}, es un placer
+      {{ client().gender | i18nSelect : invitationMap }} a nuestro evento
+    </p>
+    <button (click)="changeClient()" class="btn btn-primary">
+      Cambiar cliente
+    </button>
   </app-card>
 
   <app-card title="i18nPluralPipe">
-    <p>Actualmente  {{clients().length |i18nPlural: clientsMap()}} esperando.</p>
+    <p>
+      Actualmente {{ clients().length | i18nPlural : clientsMap() }} esperando.
+    </p>
     <!--Le voy a poner una condicion al boton para deshabilitarlo-->
     <button
-    [disabled]="clients().length === 0"
-    (click)="deleteClient()" class="btn btn-primary">Borrar cliente</button>
+      [disabled]="clients().length === 0"
+      (click)="deleteClient()"
+      class="btn btn-primary"
+    >
+      Borrar cliente
+    </button>
   </app-card>
 
+  <app-card title="SlicePipe">
+    <b>Original</b>
+    <p class="text-primary">
+      {{ clients().join(", ") }}
+    </p>
+    <!--incluye la primera y la segunda persona de la lista-->
+    <b class="mt-2">Slice:0:2</b>
+    <p class="text-primary">{{ clients() | slice : 0 : 2 }}</p>
+    <!--incluye  la segunda persona de la lista-->
+    <b class="mt-2">Slice:1:2</b>
+    <p class="text-primary">{{ clients() | slice : 1 : 2 }}</p>
+    <!--no incluye ninguna persona de la lista-->
+    <b class="mt-2">Slice:1:1</b>
+    <p class="text-primary">{{ clients() | slice : 1 : 1 }}</p>
+    <!-- incluye 2 persona y 3 persona de la lista-->
+    <b class="mt-2">Slice:1:3</b>
+    <p class="text-primary">{{ clients() | slice : 1 : 3 }}</p>
+    <!-- incluye 4 persona de la lista-->
+    <b class="mt-2">Slice:3:4</b>
+    <p class="text-primary">{{ clients() | slice : 3 : 4 }}</p>
+    <!-- incluye todos menos las tres ultimas personas de la lista-->
+    <b class="mt-2">Slice:0:-3</b>
+    <p class="text-primary">{{ clients() | slice : 0 : -3 }}</p>
+  </app-card>
 </div>
-
-
-
-
