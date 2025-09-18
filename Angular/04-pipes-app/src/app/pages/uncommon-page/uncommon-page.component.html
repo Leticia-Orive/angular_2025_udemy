@@ -52,11 +52,27 @@
     <b class="mt-2">Slice:0:-3</b>
     <p class="text-primary">{{ clients() | slice : 0 : -3 }}</p>
   </app-card>
-<!--JsonPipe: me sirve para poder mostrar objetos o la representacion de un Json de un
+
+  <!--JsonPipe: me sirve para poder mostrar objetos o la representacion de un Json de un
 objecto en pantalla y es buena para hacer depuraciones -->
   <app-card title="JsonPipe">
     <pre class="text-primary">{{ clients() | json }}</pre>
     <pre class="text-primary">{{ client() | json }}</pre>
     <p class="text-primary">{{ clients().join(", ") | json | uppercase }}</p>
+  </app-card>
+
+  <app-card title="KeyValuePipe">
+    <!--<pre>{{profile | keyvalue |json}}</pre>-->
+    <ul>
+      @for (item of profile | keyvalue; track $index){
+      <li>
+        <strong class="text-primary">{{ item.key |titlecase}}.-</strong>
+        <span>
+
+          {{ item.value }}
+        </span>
+      </li>
+      }
+    </ul>
   </app-card>
 </div>
