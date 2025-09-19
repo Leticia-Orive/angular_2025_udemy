@@ -46,9 +46,20 @@
         <tr>
         <td>{{i + 1}}</td>
         <td>{{hero.name}}</td>
-        <td>{{hero.canFly ? 'Sí' : 'No'}}</td>
-        <td>{{hero.color}}</td>
-        <td>{{hero.creator}}</td>
+        <td>
+          <span class="text-xs w-44"
+          [class.text-success]="hero.canFly"
+          [class.text-accent]="!hero.canFly">
+          <!--Puede volar | no puede volar -->
+            {{hero.canFly | canFly }}
+          </span>
+        </td>
+        <td>
+          <span  class="text-xs w-44"
+          [style.color]="hero.color | heroTextColor">{{hero.color | heroColor | titlecase}}</span></td>
+        <td [class.text-primary]="hero.creator === 0"
+        [class.text-accent]="hero.creator === 1">
+          <span>{{hero.creator | heroCreator | titlecase}}</span></td>
 
       </tr>
        }
