@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ToggleCasePipe } from '../../pipes/toggle-case.pipe';
 
 @Component({
   selector: 'app-custom-page',
-  imports: [],
+  imports: [ToggleCasePipe],
   templateUrl: './custom-page.component.html',
-
 })
-export default class CustomPageComponent { }
+export default class CustomPageComponent {
+  //Creamos una señal
+
+  name = signal('Leticia Orive');
+  upperCase = signal(true);
+}
