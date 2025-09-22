@@ -3,7 +3,7 @@ import { CountryPageComponent } from "./country-page/country-page.component";
 
 
 
-export const authRoutes: Routes = [
+export const countryRoutes: Routes = [
   {
     path: '',
     component: CountryPageComponent
