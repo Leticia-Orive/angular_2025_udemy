@@ -6,6 +6,8 @@ import { HeroColorPipe } from "../../pipes/heroColor.pipe";
 import { HeroTextColorPipe } from "../../pipes/hero-text-color.pipe";
 import { TitleCasePipe } from '@angular/common';
 import { HeroCreatorPipe } from '../../pipes/hero-creator.pipe';
+import { HeroSortByPipe } from "../../pipes/hero-sort-by.pipe";
+import { Hero } from '../../interfaces/hero.interface';
 
 @Component({
   selector: 'app-custom-page',
@@ -15,7 +17,9 @@ import { HeroCreatorPipe } from '../../pipes/hero-creator.pipe';
     HeroColorPipe,
     HeroTextColorPipe,
     TitleCasePipe,
-  HeroCreatorPipe],
+    HeroCreatorPipe,
+    HeroSortByPipe
+],
   templateUrl: './custom-page.component.html',
 })
 export default class CustomPageComponent {
@@ -25,4 +29,7 @@ export default class CustomPageComponent {
   upperCase = signal(true);
 
   heroes = signal(heroes)
+
+  //Crearme una nueva señal
+  sortBy = signal<keyof Hero | null>(null)
 }
