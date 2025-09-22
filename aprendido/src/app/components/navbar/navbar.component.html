@@ -1,36 +1,52 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Brand -->
+    <a routerLink="/" class="navbar-brand">
+      🛒 Mi Tienda
+    </a>
+
+    <!-- Navigation Links -->
+    <ul class="navbar-nav">
+      <li>
+        <a routerLink="/shop" routerLinkActive="active" class="nav-link">
+          🏪 Tienda
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/cart" routerLinkActive="active" class="nav-link cart-link">
+          🛒 Carrito
+          <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+        </a>
+      </li>
+
+      <!-- Admin Link (only for admins) -->
+      <li *ngIf="isAdmin()">
+        <a routerLink="/admin" routerLinkActive="active" class="nav-link">
+          ⚙️ Admin
+        </a>
+      </li>
+    </ul>
+
+    <!-- User Menu -->
+    <div class="user-menu" *ngIf="currentUser; else authLinks">
+      <div class="user-info">
+        <span>👤 {{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+        <span class="user-role" [class.admin]="currentUser.role === userRoles.ADMIN">
+          {{ currentUser.role === userRoles.ADMIN ? 'Admin' : 'Cliente' }}
+        </span>
+      </div>
+      <button (click)="logout()" class="logout-btn">
+        Cerrar Sesión
+      </button>
     </div>
+
+    <!-- Auth Links (when not logged in) -->
+    <ng-template #authLinks>
+      <div class="auth-links">
+        <a routerLink="/login" class="btn-outline">Iniciar Sesión</a>
+        <a routerLink="/register" class="btn-primary">Registrarse</a>
+      </div>
+    </ng-template>
   </div>
 </nav>

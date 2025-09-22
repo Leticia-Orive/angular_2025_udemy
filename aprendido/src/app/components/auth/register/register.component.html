@@ -1,0 +1,113 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2>Crear Cuenta</h2>
+    <p class="subtitle">Únete a nuestra tienda online</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <!-- Error Message -->
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="firstName">Nombre</label>
+        <input
+          type="text"
+          id="firstName"
+          formControlName="firstName"
+          class="form-control"
+          [class.error]="firstName?.invalid && firstName?.touched">
+        <div class="error-text" *ngIf="firstName?.invalid && firstName?.touched">
+          <small *ngIf="firstName?.errors?.['required']">El nombre es requerido</small>
+          <small *ngIf="firstName?.errors?.['minlength']">El nombre debe tener al menos 2 caracteres</small>
+        </div>
+      </div>
+
+      <!-- Apellido -->
+      <div class="form-group">
+        <label for="lastName">Apellido</label>
+        <input
+          type="text"
+          id="lastName"
+          formControlName="lastName"
+          class="form-control"
+          [class.error]="lastName?.invalid && lastName?.touched">
+        <div class="error-text" *ngIf="lastName?.invalid && lastName?.touched">
+          <small *ngIf="lastName?.errors?.['required']">El apellido es requerido</small>
+          <small *ngIf="lastName?.errors?.['minlength']">El apellido debe tener al menos 2 caracteres</small>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [class.error]="email?.invalid && email?.touched">
+        <div class="error-text" *ngIf="email?.invalid && email?.touched">
+          <small *ngIf="email?.errors?.['required']">El email es requerido</small>
+          <small *ngIf="email?.errors?.['email']">Por favor ingresa un email válido</small>
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="password?.invalid && password?.touched">
+        <div class="error-text" *ngIf="password?.invalid && password?.touched">
+          <small *ngIf="password?.errors?.['required']">La contraseña es requerida</small>
+          <small *ngIf="password?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</small>
+        </div>
+      </div>
+
+      <!-- Confirmar Contraseña -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirmar Contraseña</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          class="form-control"
+          [class.error]="confirmPassword?.invalid && confirmPassword?.touched">
+        <div class="error-text" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+          <small *ngIf="confirmPassword?.errors?.['required']">Confirma tu contraseña</small>
+          <small *ngIf="confirmPassword?.errors?.['mismatch']">Las contraseñas no coinciden</small>
+        </div>
+      </div>
+
+      <!-- Tipo de Usuario -->
+      <div class="form-group">
+        <label for="role">Tipo de Cuenta</label>
+        <select
+          id="role"
+          formControlName="role"
+          class="form-control">
+          <option [value]="userRoles.CLIENT">Cliente</option>
+          <option [value]="userRoles.ADMIN">Administrador</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="!registerForm.valid || loading">
+        <span *ngIf="loading">Registrando...</span>
+        <span *ngIf="!loading">Crear Cuenta</span>
+      </button>
+    </form>
+
+    <div class="login-link">
+      <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia Sesión</a></p>
+    </div>
+  </div>
+</div>

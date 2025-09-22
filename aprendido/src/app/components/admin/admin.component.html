@@ -1,0 +1,181 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Panel de Administración</h1>
+    <p>Gestiona los productos de la tienda</p>
+    <button (click)="showAddForm()" class="btn-add" *ngIf="!showForm">
+      ➕ Agregar Producto
+    </button>
+  </div>
+
+  <!-- Product Form -->
+  <div class="product-form-container" *ngIf="showForm">
+    <div class="form-card">
+      <h2>{{ editingProduct ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Nombre del Producto</label>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control"
+              [class.error]="name?.invalid && name?.touched">
+            <div class="error-text" *ngIf="name?.invalid && name?.touched">
+              <small *ngIf="name?.errors?.['required']">El nombre es requerido</small>
+              <small *ngIf="name?.errors?.['minlength']">Mínimo 2 caracteres</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Categoría</label>
+            <input
+              type="text"
+              id="category"
+              formControlName="category"
+              class="form-control"
+              [class.error]="category?.invalid && category?.touched">
+            <div class="error-text" *ngIf="category?.invalid && category?.touched">
+              <small *ngIf="category?.errors?.['required']">La categoría es requerida</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Descripción</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-control"
+            rows="3"
+            [class.error]="description?.invalid && description?.touched"></textarea>
+          <div class="error-text" *ngIf="description?.invalid && description?.touched">
+            <small *ngIf="description?.errors?.['required']">La descripción es requerida</small>
+            <small *ngIf="description?.errors?.['minlength']">Mínimo 10 caracteres</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="imageUrl">URL de la Imagen</label>
+          <input
+            type="url"
+            id="imageUrl"
+            formControlName="imageUrl"
+            class="form-control"
+            placeholder="https://ejemplo.com/imagen.jpg"
+            [class.error]="imageUrl?.invalid && imageUrl?.touched">
+          <div class="error-text" *ngIf="imageUrl?.invalid && imageUrl?.touched">
+            <small *ngIf="imageUrl?.errors?.['required']">La URL de imagen es requerida</small>
+            <small *ngIf="imageUrl?.errors?.['pattern']">Debe ser una URL válida</small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price">Precio ($)</label>
+            <input
+              type="number"
+              id="price"
+              formControlName="price"
+              step="0.01"
+              min="0"
+              class="form-control"
+              [class.error]="price?.invalid && price?.touched">
+            <div class="error-text" *ngIf="price?.invalid && price?.touched">
+              <small *ngIf="price?.errors?.['required']">El precio es requerido</small>
+              <small *ngIf="price?.errors?.['min']">El precio debe ser mayor a 0</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="stock">Stock</label>
+            <input
+              type="number"
+              id="stock"
+              formControlName="stock"
+              min="0"
+              class="form-control"
+              [class.error]="stock?.invalid && stock?.touched">
+            <div class="error-text" *ngIf="stock?.invalid && stock?.touched">
+              <small *ngIf="stock?.errors?.['required']">El stock es requerido</small>
+              <small *ngIf="stock?.errors?.['min']">El stock no puede ser negativo</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn-save"
+            [disabled]="!productForm.valid || loading">
+            <span *ngIf="loading">Guardando...</span>
+            <span *ngIf="!loading && editingProduct">Actualizar Producto</span>
+            <span *ngIf="!loading && !editingProduct">Crear Producto</span>
+          </button>
+
+          <button
+            type="button"
+            (click)="cancelEdit()"
+            class="btn-cancel">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Products List -->
+  <div class="products-section">
+    <h2>Productos Existentes ({{ products.length }})</h2>
+
+    <!-- Debug info -->
+    <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px;">
+      <strong>Debug Info:</strong><br>
+      Loading: {{ loading }}<br>
+      Productos array length: {{ products.length }}<br>
+      ShowForm: {{ showForm }}
+    </div>
+
+    <div class="loading" *ngIf="loading && !showForm">
+      <p>Cargando productos...</p>
+    </div>    <div class="products-table" *ngIf="!loading">
+      <div class="product-row header-row">
+        <div class="product-image-cell">Imagen</div>
+        <div class="product-name-cell">Nombre</div>
+        <div class="product-category-cell">Categoría</div>
+        <div class="product-price-cell">Precio</div>
+        <div class="product-stock-cell">Stock</div>
+        <div class="product-actions-cell">Acciones</div>
+      </div>
+
+      <div class="product-row" *ngFor="let product of products">
+        <div class="product-image-cell">
+          <img [src]="product.imageUrl" [alt]="product.name" class="product-thumbnail">
+        </div>
+        <div class="product-name-cell">
+          <strong>{{ product.name }}</strong>
+          <small>{{ product.description | slice:0:50 }}...</small>
+        </div>
+        <div class="product-category-cell">{{ product.category }}</div>
+        <div class="product-price-cell">${{ product.price | number:'1.2-2' }}</div>
+        <div class="product-stock-cell" [class.low-stock]="product.stock <= 5">
+          {{ product.stock }}
+        </div>
+        <div class="product-actions-cell">
+          <button (click)="editProduct(product)" class="btn-edit">
+            ✏️ Editar
+          </button>
+          <button (click)="deleteProduct(product)" class="btn-delete">
+            🗑️ Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-products" *ngIf="!loading && products.length === 0">
+      <h3>No hay productos</h3>
+      <p>Agrega tu primer producto para empezar.</p>
+    </div>
+  </div>
+</div>
