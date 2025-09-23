@@ -1,15 +1,25 @@
+<!--
+  PLANTILLA HTML DEL COMPONENTE LOGIN
+
+  Esta plantilla define la interfaz de usuario para el formulario de inicio de sesión.
+  Incluye validaciones, manejo de errores y botones de demo para testing.
+-->
+
 <div class="login-container">
   <div class="login-card">
+    <!-- Encabezado del formulario -->
     <h2>Iniciar Sesión</h2>
     <p class="subtitle">Accede a tu cuenta</p>
 
+    <!-- Formulario reactivo de login -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-      <!-- Error Message -->
+
+      <!-- Mensaje de error global -->
       <div class="error-message" *ngIf="error">
         {{ error }}
       </div>
 
-      <!-- Email -->
+      <!-- Campo Email con validaciones -->
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -19,13 +29,15 @@
           class="form-control"
           placeholder="tu@email.com"
           [class.error]="email?.invalid && email?.touched">
+
+        <!-- Mensajes de error específicos para el campo email -->
         <div class="error-text" *ngIf="email?.invalid && email?.touched">
           <small *ngIf="email?.errors?.['required']">El email es requerido</small>
           <small *ngIf="email?.errors?.['email']">Por favor ingresa un email válido</small>
         </div>
       </div>
 
-      <!-- Contraseña -->
+      <!-- Campo Contraseña con validaciones -->
       <div class="form-group">
         <label for="password">Contraseña</label>
         <input
@@ -35,34 +47,40 @@
           class="form-control"
           placeholder="Tu contraseña"
           [class.error]="password?.invalid && password?.touched">
+
+        <!-- Mensajes de error específicos para el campo contraseña -->
         <div class="error-text" *ngIf="password?.invalid && password?.touched">
           <small *ngIf="password?.errors?.['required']">La contraseña es requerida</small>
         </div>
       </div>
 
-      <!-- Submit Button -->
+      <!-- Botón de envío del formulario -->
       <button
         type="submit"
         class="btn-primary"
         [disabled]="!loginForm.valid || loading">
+        <!-- Texto condicional según el estado de carga -->
         <span *ngIf="loading">Iniciando sesión...</span>
         <span *ngIf="!loading">Iniciar Sesión</span>
       </button>
     </form>
 
-    <!-- Demo Credentials -->
+    <!-- Sección de credenciales de demostración para testing -->
     <div class="demo-section">
       <h4>Cuentas de Demostración:</h4>
       <div class="demo-buttons">
+        <!-- Botón para rellenar credenciales de administrador -->
         <button type="button" class="btn-demo" (click)="fillAdminCredentials()">
           🔧 Administrador
         </button>
+        <!-- Botón para rellenar credenciales de cliente -->
         <button type="button" class="btn-demo" (click)="fillClientCredentials()">
           👤 Cliente
         </button>
       </div>
     </div>
 
+    <!-- Enlace de navegación para registro -->
     <div class="register-link">
       <p>¿No tienes una cuenta? <a routerLink="/register">Regístrate</a></p>
     </div>

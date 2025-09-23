@@ -1,26 +1,37 @@
+<!--
+  PLANTILLA HTML DEL COMPONENTE NAVBAR
+
+  Esta plantilla define la barra de navegación principal que aparece en todas las páginas.
+  Incluye navegación, información del usuario y funcionalidades según el rol.
+-->
+
 <nav class="navbar">
   <div class="navbar-container">
-    <!-- Brand -->
+
+    <!-- Logo/Marca de la aplicación -->
     <a routerLink="/" class="navbar-brand">
       🛒 Mi Tienda
     </a>
 
-    <!-- Navigation Links -->
+    <!-- Enlaces de navegación principales -->
     <ul class="navbar-nav">
+      <!-- Enlace a la tienda -->
       <li>
         <a routerLink="/shop" routerLinkActive="active" class="nav-link">
           🏪 Tienda
         </a>
       </li>
 
+      <!-- Enlace al carrito con contador de items -->
       <li>
         <a routerLink="/cart" routerLinkActive="active" class="nav-link cart-link">
           🛒 Carrito
+          <!-- Badge con el número de items en el carrito -->
           <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
         </a>
       </li>
 
-      <!-- Admin Link (only for admins) -->
+      <!-- Enlace al panel de administración (solo para administradores) -->
       <li *ngIf="isAdmin()">
         <a routerLink="/admin" routerLinkActive="active" class="nav-link">
           ⚙️ Admin
@@ -28,20 +39,23 @@
       </li>
     </ul>
 
-    <!-- User Menu -->
+    <!-- Menú del usuario autenticado -->
     <div class="user-menu" *ngIf="currentUser; else authLinks">
+      <!-- Información del usuario actual -->
       <div class="user-info">
         <span>👤 {{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+        <!-- Indicador del rol del usuario -->
         <span class="user-role" [class.admin]="currentUser.role === userRoles.ADMIN">
           {{ currentUser.role === userRoles.ADMIN ? 'Admin' : 'Cliente' }}
         </span>
       </div>
+      <!-- Botón de logout -->
       <button (click)="logout()" class="logout-btn">
         Cerrar Sesión
       </button>
     </div>
 
-    <!-- Auth Links (when not logged in) -->
+    <!-- Enlaces de autenticación (cuando no hay usuario logueado) -->
     <ng-template #authLinks>
       <div class="auth-links">
         <a routerLink="/login" class="btn-outline">Iniciar Sesión</a>

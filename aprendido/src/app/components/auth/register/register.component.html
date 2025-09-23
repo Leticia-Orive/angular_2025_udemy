@@ -1,15 +1,25 @@
+<!--
+  PLANTILLA HTML DEL COMPONENTE REGISTER
+
+  Esta plantilla define la interfaz de usuario para el formulario de registro de nuevos usuarios.
+  Incluye campos para información personal, credenciales y selección de rol.
+-->
+
 <div class="register-container">
   <div class="register-card">
+    <!-- Encabezado del formulario -->
     <h2>Crear Cuenta</h2>
     <p class="subtitle">Únete a nuestra tienda online</p>
 
+    <!-- Formulario reactivo de registro -->
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-      <!-- Error Message -->
+
+      <!-- Mensaje de error global -->
       <div class="error-message" *ngIf="error">
         {{ error }}
       </div>
 
-      <!-- Nombre -->
+      <!-- Campo Nombre con validaciones -->
       <div class="form-group">
         <label for="firstName">Nombre</label>
         <input
@@ -18,13 +28,15 @@
           formControlName="firstName"
           class="form-control"
           [class.error]="firstName?.invalid && firstName?.touched">
+
+        <!-- Mensajes de error específicos para el nombre -->
         <div class="error-text" *ngIf="firstName?.invalid && firstName?.touched">
           <small *ngIf="firstName?.errors?.['required']">El nombre es requerido</small>
           <small *ngIf="firstName?.errors?.['minlength']">El nombre debe tener al menos 2 caracteres</small>
         </div>
       </div>
 
-      <!-- Apellido -->
+      <!-- Campo Apellido con validaciones -->
       <div class="form-group">
         <label for="lastName">Apellido</label>
         <input
@@ -33,13 +45,15 @@
           formControlName="lastName"
           class="form-control"
           [class.error]="lastName?.invalid && lastName?.touched">
+
+        <!-- Mensajes de error específicos para el apellido -->
         <div class="error-text" *ngIf="lastName?.invalid && lastName?.touched">
           <small *ngIf="lastName?.errors?.['required']">El apellido es requerido</small>
           <small *ngIf="lastName?.errors?.['minlength']">El apellido debe tener al menos 2 caracteres</small>
         </div>
       </div>
 
-      <!-- Email -->
+      <!-- Campo Email con validaciones -->
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -48,13 +62,15 @@
           formControlName="email"
           class="form-control"
           [class.error]="email?.invalid && email?.touched">
+
+        <!-- Mensajes de error específicos para el email -->
         <div class="error-text" *ngIf="email?.invalid && email?.touched">
           <small *ngIf="email?.errors?.['required']">El email es requerido</small>
           <small *ngIf="email?.errors?.['email']">Por favor ingresa un email válido</small>
         </div>
       </div>
 
-      <!-- Contraseña -->
+      <!-- Campo Contraseña con validaciones -->
       <div class="form-group">
         <label for="password">Contraseña</label>
         <input
@@ -63,13 +79,15 @@
           formControlName="password"
           class="form-control"
           [class.error]="password?.invalid && password?.touched">
+
+        <!-- Mensajes de error específicos para la contraseña -->
         <div class="error-text" *ngIf="password?.invalid && password?.touched">
           <small *ngIf="password?.errors?.['required']">La contraseña es requerida</small>
           <small *ngIf="password?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</small>
         </div>
       </div>
 
-      <!-- Confirmar Contraseña -->
+      <!-- Campo Confirmar Contraseña con validación personalizada -->
       <div class="form-group">
         <label for="confirmPassword">Confirmar Contraseña</label>
         <input
@@ -78,34 +96,39 @@
           formControlName="confirmPassword"
           class="form-control"
           [class.error]="confirmPassword?.invalid && confirmPassword?.touched">
+
+        <!-- Mensajes de error específicos para la confirmación de contraseña -->
         <div class="error-text" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
           <small *ngIf="confirmPassword?.errors?.['required']">Confirma tu contraseña</small>
           <small *ngIf="confirmPassword?.errors?.['mismatch']">Las contraseñas no coinciden</small>
         </div>
       </div>
 
-      <!-- Tipo de Usuario -->
+      <!-- Campo Select para Tipo de Usuario/Rol -->
       <div class="form-group">
         <label for="role">Tipo de Cuenta</label>
         <select
           id="role"
           formControlName="role"
           class="form-control">
+          <!-- Opciones del enum UserRole -->
           <option [value]="userRoles.CLIENT">Cliente</option>
           <option [value]="userRoles.ADMIN">Administrador</option>
         </select>
       </div>
 
-      <!-- Submit Button -->
+      <!-- Botón de envío del formulario -->
       <button
         type="submit"
         class="btn-primary"
         [disabled]="!registerForm.valid || loading">
+        <!-- Texto condicional según el estado de carga -->
         <span *ngIf="loading">Registrando...</span>
         <span *ngIf="!loading">Crear Cuenta</span>
       </button>
     </form>
 
+    <!-- Enlace de navegación para login -->
     <div class="login-link">
       <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia Sesión</a></p>
     </div>

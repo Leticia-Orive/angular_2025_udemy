@@ -1,15 +1,24 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* CONFIGURACIÓN DE TYPESCRIPT PARA ARCHIVOS DE TESTING
+ * Este archivo extiende la configuración base y define opciones específicas para compilar tests.
+ * To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
 /* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
+  // Extiende la configuración base del proyecto
   "extends": "./tsconfig.json",
+  
+  // Opciones específicas para los archivos de testing
   "compilerOptions": {
+    // Directorio de salida específico para archivos de prueba
     "outDir": "./out-tsc/spec",
+    // Incluye tipos de Jasmine para testing
     "types": [
       "jasmine"
     ]
   },
+  
+  // Incluye todos los archivos de prueba (.spec.ts) y definiciones de tipos
   "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "src/**/*.spec.ts",  // Archivos de especificaciones/tests
+    "src/**/*.d.ts"      // Archivos de definición de tipos
   ]
 }

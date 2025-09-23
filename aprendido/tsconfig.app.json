@@ -1,14 +1,25 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* CONFIGURACIÓN DE TYPESCRIPT ESPECÍFICA PARA LA APLICACIÓN
+ * Este archivo extiende la configuración base y define opciones específicas para compilar la app.
+ * To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
 /* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
+  // Extiende la configuración base del proyecto
   "extends": "./tsconfig.json",
+  
+  // Opciones específicas para la aplicación
   "compilerOptions": {
+    // Directorio de salida específico para la aplicación
     "outDir": "./out-tsc/app",
+    // No incluye tipos adicionales (se definen según necesidad)
     "types": []
   },
+  
+  // Archivo principal de entrada de la aplicación
   "files": [
     "src/main.ts"
   ],
+  
+  // Incluye todos los archivos de definición de tipos en src/
   "include": [
     "src/**/*.d.ts"
   ]

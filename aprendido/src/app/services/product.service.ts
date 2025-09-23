@@ -1,12 +1,28 @@
+/**
+ * SERVICIO DE GESTIÓN DE PRODUCTOS
+ *
+ * Este servicio maneja toda la lógica relacionada con productos del catálogo,
+ * incluyendo operaciones CRUD, filtrado y búsqueda.
+ *
+ * Características principales:
+ * - Datos mock de productos para desarrollo
+ * - Operaciones CRUD completas (Create, Read, Update, Delete)
+ * - Filtrado por categoría y búsqueda por texto
+ * - Estado reactivo con BehaviorSubject
+ * - Simulación de delays para replicar llamadas al backend
+ */
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { Product, CreateProductRequest, UpdateProductRequest } from '../models/product.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'  // Singleton disponible en toda la aplicación
 })
 export class ProductService {
+
+  // DATOS MOCK - En una aplicación real, estos vendrían del backend
   private products: Product[] = [
     // Categoría: Electrónicos
     {
@@ -558,23 +574,52 @@ export class ProductService {
     }
   ];
 
+  // ESTADO REACTIVO DEL SERVICIO
+  // BehaviorSubject para mantener y notificar cambios en la lista de productos
   private productsSubject = new BehaviorSubject<Product[]>(this.products);
   public products$ = this.productsSubject.asObservable();
 
   constructor() { }
 
+  // MÉTODOS DE LECTURA (READ)
+
+  /**
+   * MÉTODO: Obtener todos los productos
+   *
+   * @returns Observable con la lista completa de productos
+   */
   getProducts(): Observable<Product[]> {
-    return of(this.products).pipe(delay(500));
+    return of(this.products).pipe(delay(500));    // Simula delay de red
   }
 
+  /**
+   * MÉTODO: Obtener producto por ID
+   *
+   * @param id - ID único del producto a buscar
+   * @returns Observable con el producto encontrado o undefined
+   */
   getProductById(id: string): Observable<Product | undefined> {
     return of(this.products.find(product => product.id === id)).pipe(delay(300));
   }
 
+  /**
+   * MÉTODO: Obtener productos por categoría
+   *
+   * @param category - Nombre de la categoría a filtrar
+   * @returns Observable con productos de la categoría especificada
+   */
   getProductsByCategory(category: string): Observable<Product[]> {
     return of(this.products.filter(product => product.category === category)).pipe(delay(500));
   }
 
+  /**
+   * MÉTODO: Buscar productos por texto
+   *
+   * Busca coincidencias en nombre y descripción de productos.
+   *
+   * @param searchTerm - Término de búsqueda
+   * @returns Observable con productos que coinciden con la búsqueda
+   */
   searchProducts(searchTerm: string): Observable<Product[]> {
     const filteredProducts = this.products.filter(product =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -583,8 +628,16 @@ export class ProductService {
     return of(filteredProducts).pipe(delay(500));
   }
 
+  // MÉTODOS DE ESCRITURA (CREATE, UPDATE, DELETE)
+
+  /**
+   * MÉTODO: Crear nuevo producto
+   *
+   * @param productData - Datos del producto a crear
+   * @returns Observable con el producto creado
+   */
   createProduct(productData: CreateProductRequest): Observable<Product> {
-    // Generar un ID único basado en el timestamp y un número aleatorio
+    // Generar un ID único basado en timestamp y número aleatorio
     const id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
 
     const newProduct: Product = {
@@ -593,18 +646,27 @@ export class ProductService {
       createdAt: new Date()
     };
 
+    // Agregar a la lista local y notificar cambios
     this.products.push(newProduct);
     this.productsSubject.next([...this.products]);
 
     return of(newProduct).pipe(delay(500));
   }
 
+  /**
+   * MÉTODO: Actualizar producto existente
+   *
+   * @param productData - Datos actualizados del producto (debe incluir ID)
+   * @returns Observable con el producto actualizado
+   * @throws Error si el producto no se encuentra
+   */
   updateProduct(productData: UpdateProductRequest): Observable<Product> {
     const index = this.products.findIndex(p => p.id === productData.id);
     if (index === -1) {
       throw new Error('Producto no encontrado');
     }
 
+    // Actualizar producto manteniendo propiedades existentes
     const updatedProduct = { ...this.products[index], ...productData };
     this.products[index] = updatedProduct;
     this.productsSubject.next([...this.products]);
@@ -612,18 +674,35 @@ export class ProductService {
     return of(updatedProduct).pipe(delay(500));
   }
 
+  /**
+   * MÉTODO: Eliminar producto
+   *
+   * @param id - ID del producto a eliminar
+   * @returns Observable<boolean> - true si se eliminó correctamente
+   * @throws Error si el producto no se encuentra
+   */
   deleteProduct(id: string): Observable<boolean> {
     const index = this.products.findIndex(p => p.id === id);
     if (index === -1) {
       throw new Error('Producto no encontrado');
     }
 
+    // Eliminar producto de la lista y notificar cambios
     this.products.splice(index, 1);
     this.productsSubject.next([...this.products]);
 
     return of(true).pipe(delay(500));
   }
 
+  // MÉTODOS DE UTILIDAD
+
+  /**
+   * MÉTODO: Obtener categorías únicas
+   *
+   * Extrae todas las categorías diferentes de los productos existentes.
+   *
+   * @returns Observable con array de nombres de categorías únicas
+   */
   getCategories(): Observable<string[]> {
     const categories = [...new Set(this.products.map(product => product.category))];
     return of(categories).pipe(delay(200));
