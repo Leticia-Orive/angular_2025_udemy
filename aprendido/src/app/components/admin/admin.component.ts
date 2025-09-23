@@ -95,16 +95,19 @@ export class AdminComponent implements OnInit {
 
         this.productService.updateProduct(updateData).subscribe({
           next: (updatedProduct) => {
+            console.log('✅ Producto actualizado:', updatedProduct);
             const index = this.products.findIndex(p => p.id === updatedProduct.id);
             if (index !== -1) {
               this.products[index] = updatedProduct;
             }
             this.cancelEdit();
             this.loading = false;
+            alert('Producto actualizado correctamente');
           },
           error: (error) => {
-            console.error('Error actualizando producto:', error);
+            console.error('❌ Error actualizando producto:', error);
             this.loading = false;
+            alert('Error al actualizar el producto');
           }
         });
       } else {
@@ -113,13 +116,16 @@ export class AdminComponent implements OnInit {
 
         this.productService.createProduct(createData).subscribe({
           next: (newProduct) => {
+            console.log('✅ Producto creado:', newProduct);
             this.products.push(newProduct);
             this.cancelEdit();
             this.loading = false;
+            alert('Producto creado correctamente');
           },
           error: (error) => {
-            console.error('Error creando producto:', error);
+            console.error('❌ Error creando producto:', error);
             this.loading = false;
+            alert('Error al crear el producto');
           }
         });
       }
@@ -127,16 +133,21 @@ export class AdminComponent implements OnInit {
   }
 
   deleteProduct(product: Product): void {
-    if (confirm(`¿Estás seguro de que quieres eliminar "${product.name}"?`)) {
+    if (confirm(`¿Estás seguro de que quieres eliminar "${product.name}"?\n\nEsta acción no se puede deshacer.`)) {
       this.loading = true;
+      console.log('🗑️ Eliminando producto:', product.name);
+
       this.productService.deleteProduct(product.id).subscribe({
         next: () => {
+          console.log('✅ Producto eliminado exitosamente');
           this.products = this.products.filter(p => p.id !== product.id);
           this.loading = false;
+          alert('Producto eliminado correctamente');
         },
         error: (error) => {
-          console.error('Error eliminando producto:', error);
+          console.error('❌ Error eliminando producto:', error);
           this.loading = false;
+          alert('Error al eliminar el producto');
         }
       });
     }

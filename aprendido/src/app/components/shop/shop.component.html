@@ -47,10 +47,15 @@
         <img [src]="product.imageUrl" [alt]="product.name" loading="lazy">
         <div class="product-overlay">
           <button
+            (click)="showCinemaTicketModal(product)"
+            class="view-details-btn">
+            👁️ Ver Detalles
+          </button>
+          <button
             (click)="addToCart(product)"
             class="add-to-cart-btn"
             [disabled]="product.stock <= 0">
-            <span *ngIf="product.stock > 0">Agregar al Carrito</span>
+            <span *ngIf="product.stock > 0">🛒 Agregar</span>
             <span *ngIf="product.stock <= 0">Sin Stock</span>
           </button>
         </div>
@@ -76,5 +81,204 @@
     <h3>No se encontraron productos</h3>
     <p>Intenta con diferentes filtros o términos de búsqueda.</p>
     <button (click)="clearFilters()" class="clear-filters-btn">Ver todos los productos</button>
+  </div>
+</div>
+
+<!-- Modal de Detalles del Producto -->
+<div class="product-detail-modal" *ngIf="showProductDetail && selectedProduct" (click)="closeProductDetail()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ selectedProduct.name }}</h2>
+      <button class="close-btn" (click)="closeProductDetail()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="product-detail-grid">
+        <!-- Imagen del producto -->
+        <div class="product-detail-image">
+          <img [src]="selectedProduct.imageUrl" [alt]="selectedProduct.name">
+        </div>
+
+        <!-- Información del producto -->
+        <div class="product-detail-info">
+          <div class="product-category-badge">{{ selectedProduct.category }}</div>
+
+          <div class="product-description">
+            <h3>Descripción</h3>
+            <p>{{ selectedProduct.description }}</p>
+          </div>
+
+          <div class="product-price-section">
+            <span class="price-label">Precio:</span>
+            <span class="price-value">${{ selectedProduct.price | number:'1.2-2' }}</span>
+          </div>
+
+          <div class="stock-section">
+            <span class="stock-label">Stock disponible:</span>
+            <span class="stock-value" [class.low-stock]="selectedProduct.stock <= 5 && selectedProduct.stock > 0">
+              {{ selectedProduct.stock }} unidades
+            </span>
+          </div>
+
+          <!-- Selector de cantidad -->
+          <div class="quantity-section" *ngIf="selectedProduct.stock > 0">
+            <label>Cantidad:</label>
+            <div class="quantity-controls">
+              <button
+                class="quantity-btn"
+                (click)="decreaseQuantity()"
+                [disabled]="selectedQuantity <= 1">
+                -
+              </button>
+              <span class="quantity-display">{{ selectedQuantity }}</span>
+              <button
+                class="quantity-btn"
+                (click)="increaseQuantity()"
+                [disabled]="selectedQuantity >= selectedProduct.stock">
+                +
+              </button>
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="modal-actions">
+            <button
+              class="add-to-cart-detail-btn"
+              (click)="addToCartFromDetail()"
+              [disabled]="selectedProduct.stock <= 0">
+              <span *ngIf="selectedProduct.stock > 0">
+                🛒 Agregar {{ selectedQuantity }} al carrito
+              </span>
+              <span *ngIf="selectedProduct.stock <= 0">
+                Sin Stock
+              </span>
+            </button>
+            <button class="continue-shopping-btn" (click)="closeProductDetail()">
+              Seguir comprando
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Entradas de Cine -->
+<div class="cinema-modal" *ngIf="showCinemaModal" (click)="closeCinemaModal()">
+  <div class="cinema-modal-content" (click)="$event.stopPropagation()">
+    <div class="cinema-modal-header">
+      <h2>🎬 Entradas de Cine - {{ selectedCinemaType }}</h2>
+      <button class="close-btn" (click)="closeCinemaModal()">✕</button>
+    </div>
+
+    <div class="cinema-modal-body">
+      <div class="cinema-info">
+        <h3>Selecciona tus entradas</h3>
+        <p class="cinema-warning">⚠️ Los menores deben ir acompañados de al menos un adulto</p>
+      </div>
+
+      <div class="cinema-tickets-grid">
+        <!-- Entradas para Adultos -->
+        <div class="ticket-type-card">
+          <div class="ticket-header">
+            <h4>👨 Adultos (18+ años)</h4>
+            <span class="ticket-price">${{ cinemaPrices.adults | number:'1.2-2' }}</span>
+          </div>
+          <div class="ticket-controls">
+            <button
+              class="ticket-btn"
+              (click)="decreaseCinemaTickets('adults')"
+              [disabled]="cinemaTickets.adults <= 0">
+              -
+            </button>
+            <span class="ticket-count">{{ cinemaTickets.adults }}</span>
+            <button
+              class="ticket-btn"
+              (click)="increaseCinemaTickets('adults')">
+              +
+            </button>
+          </div>
+          <div class="ticket-subtotal">
+            Subtotal: ${{ (cinemaTickets.adults * cinemaPrices.adults) | number:'1.2-2' }}
+          </div>
+        </div>
+
+        <!-- Entradas para Niños -->
+        <div class="ticket-type-card" *ngIf="cinemaPrices.children > 0">
+          <div class="ticket-header">
+            <h4>🧒 Niños (6-17 años)</h4>
+            <span class="ticket-price">${{ cinemaPrices.children | number:'1.2-2' }}</span>
+          </div>
+          <div class="ticket-controls">
+            <button
+              class="ticket-btn"
+              (click)="decreaseCinemaTickets('children')"
+              [disabled]="cinemaTickets.children <= 0">
+              -
+            </button>
+            <span class="ticket-count">{{ cinemaTickets.children }}</span>
+            <button
+              class="ticket-btn"
+              (click)="increaseCinemaTickets('children')">
+              +
+            </button>
+          </div>
+          <div class="ticket-subtotal">
+            Subtotal: ${{ (cinemaTickets.children * cinemaPrices.children) | number:'1.2-2' }}
+          </div>
+          <small class="ticket-note">🔒 Requiere acompañante adulto</small>
+        </div>
+
+        <!-- Entradas para Infantiles -->
+        <div class="ticket-type-card" *ngIf="cinemaPrices.infants > 0">
+          <div class="ticket-header">
+            <h4>👶 Infantiles (3-5 años)</h4>
+            <span class="ticket-price">${{ cinemaPrices.infants | number:'1.2-2' }}</span>
+          </div>
+          <div class="ticket-controls">
+            <button
+              class="ticket-btn"
+              (click)="decreaseCinemaTickets('infants')"
+              [disabled]="cinemaTickets.infants <= 0">
+              -
+            </button>
+            <span class="ticket-count">{{ cinemaTickets.infants }}</span>
+            <button
+              class="ticket-btn"
+              (click)="increaseCinemaTickets('infants')">
+              +
+            </button>
+          </div>
+          <div class="ticket-subtotal">
+            Subtotal: ${{ (cinemaTickets.infants * cinemaPrices.infants) | number:'1.2-2' }}
+          </div>
+          <small class="ticket-note">🔒 Obligatorio acompañante adulto</small>
+        </div>
+      </div>
+
+      <!-- Total y Validación -->
+      <div class="cinema-total-section">
+        <div class="cinema-total">
+          <strong>Total: ${{ getTotalCinemaPrice() | number:'1.2-2' }}</strong>
+        </div>
+
+        <div class="validation-message" *ngIf="getCinemaValidationMessage()">
+          <span class="error-text">{{ getCinemaValidationMessage() }}</span>
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="cinema-actions">
+        <button
+          class="add-to-cart-cinema-btn"
+          (click)="addCinemaTicketsToCart()"
+          [disabled]="!canPurchaseCinemaTickets()">
+          🛒 Añadir al Carrito
+        </button>
+        <button class="cancel-cinema-btn" (click)="closeCinemaModal()">
+          Cancelar
+        </button>
+      </div>
+    </div>
   </div>
 </div>
