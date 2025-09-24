@@ -16,9 +16,9 @@
           />
           <!--Varias maneras de ponerlo-->
           <!--Si el campo es validadado-->
-          @if(isValidField('name')){
+          @if( FormUtils.isValidField(myForm, 'name')){
           <span class="form-text text-danger">
-            {{ getFieldError("name") }}
+            {{ FormUtils.getFieldError(myForm, "name") }}
           </span>
           }
 
@@ -54,9 +54,9 @@
             placeholder="Precio del producto"
             formControlName="price"
           />
-          @if(isValidField('price')){
+          @if(FormUtils.isValidField(myForm, 'price')){
           <span class="form-text text-danger">
-            {{ getFieldError("price") }}
+            {{ FormUtils.getFieldError(myForm, "price") }}
           </span>
           }
         </div>
@@ -73,9 +73,9 @@
             formControlName="inStorage"
           />
 
-          @if(isValidField('inStorage')){
+          @if(FormUtils.isValidField(myForm, 'inStorage')){
           <span class="form-text text-danger">
-            {{ getFieldError("inStorage") }}
+            {{ FormUtils.getFieldError(myForm, "inStorage") }}
           </span>
           }
         </div>

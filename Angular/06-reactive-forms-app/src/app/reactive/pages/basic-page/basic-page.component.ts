@@ -2,6 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { ReturnStatement } from '@angular/compiler';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormUtils } from '../../../utils/form-utils';
 
 @Component({
   selector: 'app-basic-page',
@@ -15,6 +16,7 @@ export class BasicPageComponent {
   //creamos una nueva property
   //fb = FormBuilder; --- IGNORE ---
   private fb = inject(FormBuilder);
+  FormUtils = FormUtils;
 
   myForm: FormGroup = this.fb.group({
     //Definimos nuestro formulario con formControl
