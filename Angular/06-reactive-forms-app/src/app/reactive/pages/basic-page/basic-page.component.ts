@@ -22,6 +22,13 @@ export class BasicPageComponent {
     inStorage: [0],
   })
 
+ /**  myForm2 = this.fb.group({
+    //Definimos nuestro formulario con formControl
+    name: ['', [], []  /** Validadores sincronos ,Validadores asincronos[] ],*/
+   // price: [0],
+   // inStorage: [0],
+  //})*/
+
   //myForm = new FormGroup({
     //Definimos nuestro formulario con formControl
    /**  name: new FormControl(''),
