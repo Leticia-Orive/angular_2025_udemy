@@ -40,8 +40,14 @@ export class BasicPageComponent {
 
     //me creo una funcion
     isValidField(fieldName: string): boolean | null {
-      return !! this.myForm.controls[fieldName].errors //le paso por la doble negacion !! para que
+      //return !! this.myForm.controls[fieldName].errors le paso por la doble negacion !! para que
       //primera mente este vacio o el valor opuesto a vacio es que tenga algo
+
+      // Retorna true si el campo tiene errores Y ha sido tocado por el usuario
+      // - this.myForm.controls[fieldName].errors: devuelve un objeto con los errores del campo (null si no hay errores)
+      // - this.myForm.controls[fieldName].touched: devuelve true si el usuario ha interactuado con el campo
+      // La condición AND (&&) asegura que solo se muestre como inválido si tiene errores Y el usuario ya lo tocó
+      return (this.myForm.controls[fieldName].errors && this.myForm.controls[fieldName].touched)
     }
 
     getFieldError(fieldName: string): string | null {
@@ -61,6 +67,17 @@ export class BasicPageComponent {
       }
       return null;
 
+    }
+    //creo un metodo
+    onSave() {
+      //validacion con if
+       if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
+      return;
+      }
+      console.log(this.myForm.value);
+      this.myForm.reset({ price: 0, inStorage: 0 });
+      //this.myForm.markAllAsTouched();
     }
 
  }
