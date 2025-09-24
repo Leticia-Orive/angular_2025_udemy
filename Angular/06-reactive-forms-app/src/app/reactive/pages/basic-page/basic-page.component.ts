@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-page',
@@ -11,11 +11,23 @@ export class BasicPageComponent {
 
   //Para que funcione un formulario reactivo
 
-  myForm = new FormGroup({
-    //Definimos nuestro formulario
-    name: new FormControl(''),
+  //creamos una nueva property
+  //fb = FormBuilder; --- IGNORE ---
+  private fb = inject(FormBuilder);
+
+  myForm = this.fb.group({
+    //Definimos nuestro formulario con formControl
+    name: ['', []  /** Validadores sincronos */ ,/**Validadores asincronos[] */],
+    price: [0],
+    inStorage: [0],
+  })
+
+  //myForm = new FormGroup({
+    //Definimos nuestro formulario con formControl
+   /**  name: new FormControl(''),
     price: new FormControl(0),
     inStorage: new FormControl(0),
-  })
+
+  })*/
 
  }
