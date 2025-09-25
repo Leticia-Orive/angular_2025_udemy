@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup, AbstractControl } from '@angular/forms';
 import { FormUtils } from '../../../utils/form-utils';
 
 @Component({
@@ -23,7 +23,14 @@ export class RegisterPageComponent {
 
     password: ['', [Validators.required, Validators.minLength(6)]],
     password2: ['', [Validators.required]],
+  }, {
+    //lo coloco dentro de este objecto de configuracion de las validaciones
+   Validators: [this.formUtils.isFieldOneEqualFieldTwo('password', 'password2')]
+   //Tambien se puede poner asi
+   //Validators: [FormUtils.isFieldOneEqualFieldTwo('password', 'password2')]
   });
+
+
 
   onSubmit() {
     this.myForm.markAllAsTouched();

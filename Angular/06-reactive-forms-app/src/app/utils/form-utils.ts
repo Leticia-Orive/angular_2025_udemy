@@ -1,4 +1,4 @@
-import { FormArray, FormGroup, ValidationErrors } from "@angular/forms";
+import { AbstractControl, FormArray, FormGroup, ValidationErrors } from "@angular/forms";
 
 
 
@@ -66,5 +66,21 @@ export class FormUtils {
     if (formArray.controls.length === 0) return null;
     const errors = formArray.controls[index].errors ?? {};
     return FormUtils.getTextError(errors);
+  }
+  static isFieldOneEqualFieldTwo(field1: string, field2: string) {
+    //devuelve una funcion
+    return (formGroup: AbstractControl) => {
+      const field1Value = formGroup.get(field1)?.value;
+      const field2Value = formGroup.get(field2)?.value;
+      //hacemos la condicion
+      return field1Value === field2Value ? null : { passwordsNotEqual: true };
+
+      /*si esta vacio
+      return null;
+      pero si hay un error tenemos que devolver un objeto de configuracion para saber cual es el error
+      return {
+        passwordsNotEqual: true
+      }*/
+    }
   }
 }
