@@ -6,6 +6,13 @@ export class FormUtils {
 
   //Extraemos un metodo para que no se repita el codigo
   static getTextError(errors: ValidationErrors){
+    console.log(errors);
+    /**
+     * {
+     * pattern:
+     *  {requiredPattern: '([a-zA-Z]+) ([a-zA-Z]+)', actualValue: 'asdasd'}}
+     * }
+    */
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
@@ -16,6 +23,14 @@ export class FormUtils {
           return `El valor mínimo es ${errors['min'].min}`;
           case 'email':
             return 'El valor ingresado no parece un correo electrónico';
+            case 'pattern':
+              if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
+                return 'El valor ingresado no luce como un correo electrónico';
+              }
+              return 'Error de patrón contra expresión regular';
+
+            default:
+              return `Error desconocido ${key}`;
       }
     }
     return null;
@@ -23,6 +38,9 @@ export class FormUtils {
   }
 
   //Expresiones regulares
+  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
 
   //Varios metodos estaticos para reutilizar en varios formularios
 
