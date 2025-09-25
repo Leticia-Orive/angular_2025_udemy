@@ -1,6 +1,15 @@
 import { AbstractControl, FormArray, FormGroup, ValidationErrors } from "@angular/forms";
+import { timeout } from "rxjs";
 
 
+//funcion asincrona
+async function sleep(){
+  return new Promise (resolve => {
+    setTimeout(() => {
+      resolve(true);
+    }, 2500);
+  })
+}
 
 export class FormUtils {
 
@@ -23,6 +32,8 @@ export class FormUtils {
           return `El valor mínimo es ${errors['min'].min}`;
           case 'email':
             return 'El valor ingresado no parece un correo electrónico';
+            case 'emailTaken':
+            return 'El correo electrónico ya fue usado';
             case 'pattern':
               if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
                 return 'El valor ingresado no luce como un correo electrónico';
@@ -83,4 +94,20 @@ export class FormUtils {
       }*/
     }
   }
+
+  //Validacion personalizada asincrona
+  static async checkingServerResponse(control: AbstractControl):
+  Promise<ValidationErrors | null> {
+    console.log('validando servidor');
+    await sleep(); //simula una espera de 2.5 segundos
+    const formValue = control.value;
+    if (formValue === 'hola@mundo.com') {
+      return {
+        emailTaken: true
+      }
+    }
+    return null
+  }
+
+
 }
