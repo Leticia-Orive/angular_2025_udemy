@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { CountryPageComponent } from "./country-page/country-page.component";
+import { CountryPageComponent } from "./pages/country-page.component";
 
 
 
