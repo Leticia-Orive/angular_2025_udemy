@@ -5,7 +5,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CountryService } from '../services/country.service';
 import { Country } from '../interfaces/country.interface';
 // Importamos operadores RxJS para transformar y controlar el flujo de datos
-import { switchMap, tap } from 'rxjs';
+// - filter: Filtra valores según una condición
+// - switchMap: Cancela observables anteriores y crea nuevos
+// - tap: Ejecuta efectos secundarios sin modificar el flujo de datos
+import { filter, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-country-page',
@@ -39,14 +42,21 @@ export class CountryPageComponent {
 
 // Effect que se ejecuta cuando hay cambios en el formulario
 // Se usa para gestionar suscripciones y limpiar recursos automáticamente
+// Este effect orquesta AMBAS suscripciones: región y país
 onFormChanged = effect((onCleanup) => {
- // Suscribirse a los cambios en el campo 'region'
+ // Suscripción 1: Escuchar cambios en el campo 'region'
+ // Cuando cambia la región → se cargan los países de esa región
  const regionSubscription = this.onRegionChanged();
 
+ // Suscripción 2: Escuchar cambios en el campo 'country'
+ // Cuando cambia el país → se cargan las fronteras de ese país
+ const countrySubscription = this.onCountryChanged();
+
  // Función de limpieza que se ejecuta cuando el effect se destruye
- // Esto previene memory leaks al desuscribirse automáticamente
+ // Esto previene memory leaks al desuscribirse automáticamente de AMBAS suscripciones
  onCleanup(() => {
-   regionSubscription.unsubscribe();
+   regionSubscription.unsubscribe();   // Limpia la suscripción de región
+   countrySubscription.unsubscribe();  // Limpia la suscripción de país
  });
 });
 
@@ -82,8 +92,33 @@ onRegionChanged() {
 
     // En este punto, el template puede mostrar los países disponibles para seleccionar
   });
-
-
-
 }
+ // Método que maneja los cambios en el campo 'country'
+ // Implementa el segundo nivel de la selección en cascada: País → Fronteras
+ onCountryChanged(){
+    return this.myForm.get('country')!.valueChanges.pipe(
+      // PASO 1: Limpiar el campo 'border' cuando cambia el país seleccionado
+      // Esto previene tener una frontera que no corresponda al nuevo país
+      tap( () => this.myForm.get('border')!.setValue('') ),
+
+      // PASO 2: Filtrar valores vacíos o nulos para evitar peticiones innecesarias
+      // Solo procede si el usuario realmente seleccionó un país (length > 0)
+      filter( value => value!.length > 0 ), // Filtra valores nulos o vacíos
+
+      // PASO 3: Obtener los datos completos del país usando su código Alpha
+      // switchMap cancela peticiones anteriores si el usuario cambia rápidamente de país
+      switchMap( alphaCode => this.countryService.getCountryByAlphaCode(alphaCode ?? '')
+    ),
+      // PASO 4: Obtener los nombres de países fronterizos usando sus códigos
+      // country.borders contiene un array de códigos, necesitamos convertirlos a nombres
+      switchMap( country => this.countryService.getCountryNamesByCodeArray(country.borders )),
+    )
+    .subscribe(borders => {
+      // PASO 5: Actualizar el signal con las fronteras del país seleccionado
+      this.borders.set(borders); // Aquí deberías actualizar el signal borders
+      console.log({borders}); // Log para verificar las fronteras cargadas
+
+      // En este punto, el template puede mostrar las fronteras disponibles para seleccionar
+    })
+  }
 }
