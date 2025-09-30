@@ -1,4 +1,4 @@
-import { afterNextRender, afterRender, Component } from '@angular/core';
+import { afterNextRender, afterRender, Component, effect, OnInit } from '@angular/core';
 
 
 const log = (...messages: string[]) => {
@@ -13,10 +13,17 @@ const log = (...messages: string[]) => {
   imports: [],
   templateUrl: './home-page.component.html',
 })
-export class HomePageComponent  {
+export class HomePageComponent implements OnInit {
   constructor(){
     console.log('constructor llamado')
   }
+  basicEffect = effect((onCleanup) => {
+    log('effect', 'Disparar efectos secundarios');
+
+    onCleanup(() => {
+      log('onCleanup', 'Se ejecuta cuando el efecto se va a destruir');
+    });
+  });
   ngOnInit() {
     log(
       'ngOnInit',
