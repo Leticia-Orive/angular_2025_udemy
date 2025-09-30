@@ -1,4 +1,4 @@
-import { afterNextRender, afterRender, Component, effect, OnInit } from '@angular/core';
+import { afterNextRender, afterRender, Component, effect, OnInit, signal } from '@angular/core';
 
 
 const log = (...messages: string[]) => {
@@ -14,8 +14,20 @@ const log = (...messages: string[]) => {
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent implements OnInit {
+  traditionalProperty = 'Leticia';
+  signalProperty = signal('Leticia');
   constructor(){
     console.log('constructor llamado')
+     setTimeout(() => {
+       this.signalProperty.set('Juan Carlos');
+     }, 2000);
+  }
+  changeTraditional() {
+    this.traditionalProperty = 'leticia orive';
+  }
+
+  changeSignal() {
+    this.signalProperty.set('leticia orive');
   }
   basicEffect = effect((onCleanup) => {
     log('effect', 'Disparar efectos secundarios');
