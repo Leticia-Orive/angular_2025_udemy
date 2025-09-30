@@ -1,5 +1,13 @@
-import { afterNextRender, afterRender, Component, effect, OnInit, signal } from '@angular/core';
-
+import {
+  afterNextRender,
+  afterRender,
+  Component,
+  effect,
+  OnChanges,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { TitleComponent } from '../../components/title/title.component';
 
 const log = (...messages: string[]) => {
   console.log(
@@ -10,25 +18,29 @@ const log = (...messages: string[]) => {
 
 @Component({
   selector: 'app-home-page',
-  imports: [],
+  imports: [TitleComponent],
   templateUrl: './home-page.component.html',
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnChanges {
   traditionalProperty = 'Leticia';
   signalProperty = signal('Leticia');
-  constructor(){
-    console.log('constructor llamado')
-     setTimeout(() => {
-       this.signalProperty.set('Juan Carlos');
-     }, 2000);
+
+  constructor() {
+    log('Constructor llamado');
+
+    // setTimeout(() => {
+    //   this.signalProperty.set('Juan Carlos');
+    // }, 2000);
   }
+
   changeTraditional() {
-    this.traditionalProperty = 'leticia orive';
+    this.traditionalProperty = 'Leticia Orive';
   }
 
   changeSignal() {
-    this.signalProperty.set('leticia orive');
+    this.signalProperty.set('Leticia Orive');
   }
+
   basicEffect = effect((onCleanup) => {
     log('effect', 'Disparar efectos secundarios');
 
@@ -36,6 +48,7 @@ export class HomePageComponent implements OnInit {
       log('onCleanup', 'Se ejecuta cuando el efecto se va a destruir');
     });
   });
+
   ngOnInit() {
     log(
       'ngOnInit',
@@ -96,9 +109,4 @@ export class HomePageComponent implements OnInit {
       'Runs every time all components have been rendered to the DOM.'
     );
   });
-
-  }
-
-
-
-
+}
