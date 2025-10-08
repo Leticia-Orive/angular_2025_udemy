@@ -1,12 +1,9 @@
 import { AfterViewInit, Component, effect, ElementRef, signal, viewChild } from '@angular/core';
-import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
-import { environment } from '../../../environments/environment';
 import { DecimalPipe } from '@angular/common';
+// 🆓 CAMBIO A LEAFLET - Completamente gratuito, sin claves API necesarias
+import * as L from 'leaflet';
 
-// TO MAKE THE MAP APPEAR YOU MUST
-// ADD YOUR ACCESS TOKEN FROM
-// https://account.mapbox.com
-mapboxgl.accessToken = environment.mapboxkey
+// 🎉 ¡Ya no necesitas claves API ni pagos! OpenStreetMap es gratuito
 
 @Component({
   selector: 'app-fullscreen-map-page',
@@ -15,10 +12,25 @@ mapboxgl.accessToken = environment.mapboxkey
   ],
   templateUrl: './fullscreen-map-page.component.html',
   styles: `
-  div {
+  /* Contenedor principal del mapa */
+  div[data-map="container"] {
     width: 100vw;
-    height: calc( 100vh - 64px) ;
+    height: calc(100vh - 64px);
+    position: relative;
+  }
 
+  /* Si el selector div no funciona, usa esta alternativa */
+  :host {
+    display: block;
+    width: 100vw;
+    height: calc(100vh - 64px);
+  }
+
+  /* Asegurar que el div del mapa tenga dimensiones */
+  #map {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 400px !important;
   }
   #controls {
     background-color: white;
@@ -37,48 +49,83 @@ mapboxgl.accessToken = environment.mapboxkey
 })
 export class FullscreenMapPageComponent implements AfterViewInit {
   divElement = viewChild<ElementRef>('map');
-//me creo una propiedad
-map = signal<mapboxgl.Map | null>(null);
 
-  //me creo una señal
+  // 🆓 Señal para el mapa de Leaflet (gratuito)
+  map = signal<L.Map | null>(null);
+
+  // Señal para el zoom
   zoom = signal(14);
 
-  // voy hacer un zoom efect
+  // Efecto para actualizar el zoom
   zoomEffect = effect(() => {
     if (!this.map()) return;
-
     this.map()?.setZoom(this.zoom());
-    // this.map()?.zoomTo(this.zoom());
   });
 
- async ngAfterViewInit() {
-  if (!this.divElement()?.nativeElement) return;
+  async ngAfterViewInit() {
+    if (!this.divElement()?.nativeElement) {
+      console.error('No se encontró el elemento del mapa');
+      return;
+    }
 
-  // Espera un poco para asegurar que el DOM esté completamente renderizado
-  await new Promise((resolve) => setTimeout(resolve, 100));
+    // Espera un poco para asegurar que el DOM esté completamente renderizado
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
-  const element = this.divElement()!.nativeElement;
-  console.log({element});
-
-  // Crear el mapa de Mapbox
-  const map = new mapboxgl.Map({
-    container: element, // Usar la referencia del elemento directamente
-    style: 'mapbox://styles/mapbox/streets-v12', // style URL
-    center: [-74.5, 40], // starting position [lng, lat]
-    zoom: this.zoom(), // starting zoom
-  });
-
-}
-//me creo otro metodo
-
-mapListeners(map: mapboxgl.Map) {
-    map.on('zoomend', (event) => {
-      const newZoom = event.target.getZoom();
-      this.zoom.set(newZoom);
+    const element = this.divElement()!.nativeElement;
+    console.log('🗺️ Elemento del mapa encontrado:', {element});
+    console.log('📐 Dimensiones del elemento:', {
+      width: element.offsetWidth,
+      height: element.offsetHeight,
+      clientWidth: element.clientWidth,
+      clientHeight: element.clientHeight
     });
 
+    // Verificar que el elemento tenga dimensiones
+    if (element.offsetWidth === 0 || element.offsetHeight === 0) {
+      console.error('❌ El elemento del mapa no tiene dimensiones! Width:', element.offsetWidth, 'Height:', element.offsetHeight);
+      return;
+    }
 
+    try {
+      // 🆓 Crear el mapa con Leaflet (GRATUITO - OpenStreetMap)
+      const map = L.map(element, {
+        center: [40.0, -74.5], // [latitud, longitud] - formato diferente a Mapbox
+        zoom: this.zoom(),
+        zoomControl: true
+      });
 
+      // 🗺️ Añadir capa de OpenStreetMap (gratuita)
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      console.log('✅ Mapa creado exitosamente con OpenStreetMap');
+
+      // Configurar los listeners del mapa
+      this.mapListeners(map);
+
+    } catch (error) {
+      console.error('❌ Error al crear el mapa:', error);
+    }
+  }
+
+  // Configurar los listeners del mapa de Leaflet
+  mapListeners(map: L.Map) {
+    // Listener para cambios de zoom
+    map.on('zoomend', () => {
+      const newZoom = map.getZoom();
+      this.zoom.set(newZoom);
+      console.log('🔍 Zoom actualizado a:', newZoom);
+    });
+
+    // Listener para cuando el mapa está listo
+    map.whenReady(() => {
+      console.log('🎉 Mapa de OpenStreetMap cargado y listo');
+    });
+
+    // Asignar el mapa a la señal
     this.map.set(map);
+    console.log('📍 Mapa asignado a la señal');
   }
 }

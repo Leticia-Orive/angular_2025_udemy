@@ -1,4 +1,8 @@
-<div #map></div>
+<div #map
+     id="map"
+     data-map="container"
+     style="width: 100vw; height: calc(100vh - 64px); min-height: 500px; background-color: #f0f0f0;">
+</div>
 <section id="controls">
   <h2 class="text-2xl font-bold text-black mb-2">Zoom
     <small class="text-gray-500 font">{{ zoom() | number:'1.0-0'}}</small>
