@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, effect, ElementRef, signal, viewChild } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, JsonPipe } from '@angular/common';
 // 🆓 CAMBIO A LEAFLET - Completamente gratuito, sin claves API necesarias
 import * as L from 'leaflet';
 
@@ -8,7 +8,8 @@ import * as L from 'leaflet';
 @Component({
   selector: 'app-fullscreen-map-page',
   imports: [
-    DecimalPipe
+    DecimalPipe,
+    JsonPipe
   ],
   templateUrl: './fullscreen-map-page.component.html',
   styles: `
@@ -55,6 +56,10 @@ export class FullscreenMapPageComponent implements AfterViewInit {
 
   // Señal para el zoom
   zoom = signal(14);
+  coordinates = signal({
+    lng: -74.5,
+    lat: 40,
+  });
 
   // Efecto para actualizar el zoom
   zoomEffect = effect(() => {
@@ -72,13 +77,8 @@ export class FullscreenMapPageComponent implements AfterViewInit {
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     const element = this.divElement()!.nativeElement;
-    console.log('🗺️ Elemento del mapa encontrado:', {element});
-    console.log('📐 Dimensiones del elemento:', {
-      width: element.offsetWidth,
-      height: element.offsetHeight,
-      clientWidth: element.clientWidth,
-      clientHeight: element.clientHeight
-    });
+    const { lat, lng } = this.coordinates();
+
 
     // Verificar que el elemento tenga dimensiones
     if (element.offsetWidth === 0 || element.offsetHeight === 0) {
@@ -89,7 +89,7 @@ export class FullscreenMapPageComponent implements AfterViewInit {
     try {
       // 🆓 Crear el mapa con Leaflet (GRATUITO - OpenStreetMap)
       const map = L.map(element, {
-        center: [40.0, -74.5], // [latitud, longitud] - formato diferente a Mapbox
+        center: [lat, lng], // [latitud, longitud] - formato diferente a Mapbox
         zoom: this.zoom(),
         zoomControl: true
       });
@@ -117,6 +117,10 @@ export class FullscreenMapPageComponent implements AfterViewInit {
       const newZoom = map.getZoom();
       this.zoom.set(newZoom);
       console.log('🔍 Zoom actualizado a:', newZoom);
+    });
+    map.on('moveend', () => {
+      const center = map.getCenter();
+      this.coordinates.set(center);
     });
 
     // Listener para cuando el mapa está listo
