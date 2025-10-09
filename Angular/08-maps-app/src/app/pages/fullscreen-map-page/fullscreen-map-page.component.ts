@@ -5,6 +5,15 @@ import * as L from 'leaflet';
 
 // 🎉 ¡Ya no necesitas claves API ni pagos! OpenStreetMap es gratuito
 
+// 🔧 ARREGLO IMPORTANTE: Configurar iconos por defecto de Leaflet
+// Esto soluciona el problema común de iconos que no aparecen
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+});
+
 @Component({
   selector: 'app-fullscreen-map-page',
   imports: [
@@ -118,14 +127,30 @@ export class FullscreenMapPageComponent implements AfterViewInit {
       this.zoom.set(newZoom);
       console.log('🔍 Zoom actualizado a:', newZoom);
     });
+    // Listener para cambios de posición del mapa
     map.on('moveend', () => {
       const center = map.getCenter();
       this.coordinates.set(center);
+      console.log('📍 Posición actualizada:', center);
     });
+
+    // 🎮 Añadir controles de Leaflet (equivalentes a Mapbox)
+    // Control de escala
+    L.control.scale({
+      metric: true,
+      imperial: false,
+      position: 'bottomleft'
+    }).addTo(map);
 
     // Listener para cuando el mapa está listo
     map.whenReady(() => {
       console.log('🎉 Mapa de OpenStreetMap cargado y listo');
+
+      // 📍 Añadir un marcador de ejemplo para verificar que todo funciona
+      L.marker([this.coordinates().lat, this.coordinates().lng])
+        .addTo(map)
+        .bindPopup('¡Tu mapa funciona correctamente! 🗺️')
+        .openPopup();
     });
 
     // Asignar el mapa a la señal
