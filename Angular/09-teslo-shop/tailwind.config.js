@@ -7,7 +7,7 @@ module.exports = {
     fontFamily: {
       'montserrat': [ 'Montserrat', 'sans-serif' ]
     },
-    extend: {
+extend: {
       animation: {
         fadeIn: 'fadeIn 0.3s ease-in-out'
       },
