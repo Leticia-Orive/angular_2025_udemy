@@ -16,7 +16,10 @@ export class HomePageComponent {
   productsResorce = rxResource({
     request: () => ({}),
     loader:({request}) => {
-      return this.ProductsService.getProducts()
+      return this.ProductsService.getProducts({
+        limit: 5,
+        gender: 'womwn'
+      })
     }
   })
 
