@@ -17,8 +17,7 @@ export class HomePageComponent {
     request: () => ({}),
     loader:({request}) => {
       return this.ProductsService.getProducts({
-        limit: 5,
-        gender: 'womwn'
+
       })
     }
   })
