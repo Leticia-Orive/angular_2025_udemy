@@ -75,7 +75,7 @@
           <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Acceso a contenido exclusivo</li>
           <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Calendario digital de pandas</li>
         </ul>
-        <button class="btn btn-success btn-lg w-100 mt-3">
+        <button class="btn btn-success btn-lg w-100 mt-3" (click)="openModal('basico')">
           <i class="fas fa-heart me-2"></i>
           Adoptar Ahora
         </button>
@@ -108,7 +108,7 @@
           <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Invitación eventos virtuales</li>
           <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Descuento 20% en tours</li>
         </ul>
-        <button class="btn btn-warning btn-lg w-100 mt-3" style="color: white;">
+        <button class="btn btn-warning btn-lg w-100 mt-3" style="color: white;" (click)="openModal('premium')">
           <i class="fas fa-star me-2"></i>
           Adoptar Premium
         </button>
@@ -138,10 +138,101 @@
           <li class="mb-2"><i class="fas fa-check me-2"></i> Libro de fotos profesional</li>
           <li class="mb-2"><i class="fas fa-check me-2"></i> Tour privado con biólogo</li>
         </ul>
-        <button class="btn btn-light btn-lg w-100 mt-3">
+        <button class="btn btn-light btn-lg w-100 mt-3" (click)="openModal('vip')">
           <i class="fas fa-gem me-2"></i>
           Adoptar VIP
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sección Especial: Pandas Recién Nacidos -->
+<div class="row mb-5">
+  <div class="col-12">
+    <div class="card border-0 shadow-lg" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);">
+      <div class="card-body p-5">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center">
+            <div class="position-relative d-inline-block">
+              <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80"
+                   class="img-fluid rounded-3 shadow" alt="Panda bebé" style="max-height: 300px;">
+              <div class="position-absolute top-0 end-0 bg-warning text-dark px-3 py-1 rounded-3 m-2">
+                <i class="fas fa-baby me-1"></i>
+                <strong>¡NUEVO!</strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h2 class="display-5 fw-bold mb-3" style="color: #d63384;">
+              <i class="fas fa-baby me-3"></i>
+              Adopta un Panda Recién Nacido
+            </h2>
+            <p class="lead mb-4">
+              Sé parte de algo muy especial: acompaña a un panda bebé desde sus primeros días de vida.
+            </p>
+
+            <div class="row mb-4">
+              <div class="col-6">
+                <div class="text-center p-3 bg-white rounded-3 shadow-sm">
+                  <i class="fas fa-heart fa-2x text-danger mb-2"></i>
+                  <h6>Cuidados 24/7</h6>
+                  <small class="text-muted">Atención especializada</small>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="text-center p-3 bg-white rounded-3 shadow-sm">
+                  <i class="fas fa-camera fa-2x text-primary mb-2"></i>
+                  <h6>Fotos Diarias</h6>
+                  <small class="text-muted">Ve cómo crece</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-warning border-0 shadow-sm mb-4">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                <div>
+                  <strong>Adopción Especial</strong><br>
+                  <small>Los pandas bebés requieren cuidados intensivos y un compromiso mínimo de 6 meses.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <button class="btn btn-lg px-4 me-md-2"
+                      style="background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; border: none;"
+                      (click)="openModal('premium')">
+                <i class="fas fa-baby me-2"></i>
+                Ver Bebés Disponibles
+              </button>
+              <button class="btn btn-outline-secondary btn-lg px-4">
+                <i class="fas fa-info-circle me-2"></i>
+                Más Información
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estadísticas de Bebés -->
+        <div class="row mt-5 pt-4 border-top border-white">
+          <div class="col-md-3 text-center mb-3">
+            <div class="display-6 fw-bold text-white">5</div>
+            <small class="text-white-50">Bebés Disponibles</small>
+          </div>
+          <div class="col-md-3 text-center mb-3">
+            <div class="display-6 fw-bold text-white">97%</div>
+            <small class="text-white-50">Tasa de Supervivencia</small>
+          </div>
+          <div class="col-md-3 text-center mb-3">
+            <div class="display-6 fw-bold text-white">45</div>
+            <small class="text-white-50">Días Promedio de Cuidado</small>
+          </div>
+          <div class="col-md-3 text-center mb-3">
+            <div class="display-6 fw-bold text-white">24/7</div>
+            <small class="text-white-50">Monitoreo Veterinario</small>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -340,7 +431,7 @@
           <div class="col-md-8">
             <div class="row g-2">
               <div class="col-md-4">
-                <button class="btn btn-warning btn-lg w-100">
+                <button class="btn btn-warning btn-lg w-100" (click)="openModal('premium')">
                   <i class="fas fa-heart me-2"></i>
                   Adoptar Ahora
                 </button>
@@ -365,6 +456,435 @@
             <i class="fas fa-shield-alt me-1"></i>
             Transacciones seguras • Certificado SSL • 100% de tu donación va a conservación
           </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Adopción -->
+<div class="modal fade" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'"
+     style="background: rgba(0,0,0,0.5);" *ngIf="showModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content border-0 shadow-lg">
+
+      <!-- Header del Modal -->
+      <div class="modal-header border-0" style="background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 100%); color: white;">
+        <h4 class="modal-title">
+          <i class="fas fa-heart me-2"></i>
+          Adoptar Panda - {{getPlanName()}} ({{getPlanPrice()}}/mes)
+        </h4>
+        <button type="button" class="btn-close btn-close-white" (click)="closeModal()"></button>
+      </div>
+
+      <!-- Indicador de Pasos -->
+      <div class="px-4 py-3 bg-light">
+        <div class="row text-center">
+          <div class="col-4">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="rounded-circle d-flex align-items-center justify-content-center me-2"
+                   [class]="currentStep >= 1 ? 'bg-success text-white' : 'bg-secondary text-white'"
+                   style="width: 30px; height: 30px; font-size: 14px;">
+                <i class="fas" [class.fa-check]="currentStep > 1" [class.fa-paw]="currentStep === 1"></i>
+              </div>
+              <span [class]="currentStep >= 1 ? 'text-success fw-bold' : 'text-muted'">Elige tu Panda</span>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="rounded-circle d-flex align-items-center justify-content-center me-2"
+                   [class]="currentStep >= 2 ? 'bg-success text-white' : 'bg-secondary text-white'"
+                   style="width: 30px; height: 30px; font-size: 14px;">
+                <i class="fas" [class.fa-check]="currentStep > 2" [class.fa-user]="currentStep <= 2"></i>
+              </div>
+              <span [class]="currentStep >= 2 ? 'text-success fw-bold' : 'text-muted'">Tus Datos</span>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="rounded-circle d-flex align-items-center justify-content-center me-2"
+                   [class]="currentStep >= 3 ? 'bg-success text-white' : 'bg-secondary text-white'"
+                   style="width: 30px; height: 30px; font-size: 14px;">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <span [class]="currentStep >= 3 ? 'text-success fw-bold' : 'text-muted'">Pago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido del Modal -->
+      <div class="modal-body p-4" style="max-height: 70vh; overflow-y: auto;">
+
+        <!-- Paso 1: Selección de Panda -->
+        <div *ngIf="currentStep === 1">
+          <h5 class="mb-4 text-center">
+            <i class="fas fa-paw text-success me-2"></i>
+            Elige el panda que quieres adoptar
+          </h5>
+
+          <!-- Filtros de Categoría -->
+          <div class="row mb-4">
+            <div class="col-12 text-center">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn"
+                        [class]="pandaFilter === 'all' ? 'btn-success' : 'btn-outline-success'"
+                        (click)="setPandaFilter('all')">
+                  <i class="fas fa-paw me-1"></i>Todos los Pandas
+                </button>
+                <button type="button" class="btn"
+                        [class]="pandaFilter === 'adults' ? 'btn-primary' : 'btn-outline-primary'"
+                        (click)="setPandaFilter('adults')">
+                  <i class="fas fa-adult me-1"></i>Adultos
+                </button>
+                <button type="button" class="btn"
+                        [class]="pandaFilter === 'babies' ? 'btn-warning' : 'btn-outline-warning'"
+                        (click)="setPandaFilter('babies')">
+                  <i class="fas fa-baby me-1"></i>Recién Nacidos
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 col-lg-3 mb-3" *ngFor="let panda of getFilteredPandas()">
+              <div class="card h-100 border-0 shadow-sm position-relative"
+                   [class.border-success]="adoptionForm.selectedPanda?.id === panda.id"
+                   [class.shadow]="adoptionForm.selectedPanda?.id === panda.id"
+                   style="cursor: pointer; transition: all 0.3s;"
+                   (click)="selectPanda(panda)"
+                   [class.opacity-50]="!panda.available">
+
+                <div *ngIf="!panda.available" class="position-absolute top-0 end-0 m-2">
+                  <span class="badge bg-danger">No Disponible</span>
+                </div>
+
+                <div *ngIf="adoptionForm.selectedPanda?.id === panda.id"
+                     class="position-absolute top-0 start-0 m-2">
+                  <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center"
+                       style="width: 30px; height: 30px;">
+                    <i class="fas fa-check"></i>
+                  </div>
+                </div>
+
+                <img [src]="panda.image" class="card-img-top" [alt]="panda.name"
+                     style="height: 200px; object-fit: cover;">
+
+                <div class="card-body text-center">
+                  <h6 class="card-title fw-bold">
+                    {{panda.name}}
+                    <span *ngIf="panda.isBaby" class="badge bg-warning ms-1">
+                      <i class="fas fa-baby"></i> Bebé
+                    </span>
+                  </h6>
+
+                  <div class="small text-muted mb-2">
+                    <div><i class="fas fa-birthday-cake me-1"></i> {{panda.age}}</div>
+                    <div><i class="fas fa-venus-mars me-1"></i> {{panda.gender}}</div>
+                    <div><i class="fas fa-map-marker-alt me-1"></i> {{panda.location}}</div>
+                    <div *ngIf="panda.isBaby && panda.mother">
+                      <i class="fas fa-heart me-1 text-danger"></i> Madre: {{panda.mother}}
+                    </div>
+                  </div>
+
+                  <p class="card-text small">
+                    <strong>Personalidad:</strong> {{panda.personality}}
+                  </p>
+
+                  <!-- Información especial para bebés -->
+                  <div *ngIf="panda.isBaby" class="alert alert-warning p-2 mt-2">
+                    <small>
+                      <i class="fas fa-exclamation-triangle me-1"></i>
+                      <strong>Cuidados especiales:</strong><br>
+                      {{panda.specialNeeds}}
+                    </small>
+                  </div>
+
+                  <div *ngIf="panda.available" class="mt-2">
+                    <button class="btn btn-sm"
+                            [class]="adoptionForm.selectedPanda?.id === panda.id ? 'btn-success' : 'btn-outline-success'"
+                            (click)="selectPanda(panda)">
+                      <i class="fas" [class.fa-heart]="adoptionForm.selectedPanda?.id === panda.id"
+                         [class.fa-heart-o]="adoptionForm.selectedPanda?.id !== panda.id"></i>
+                      {{adoptionForm.selectedPanda?.id === panda.id ? 'Seleccionado' : 'Seleccionar'}}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="adoptionForm.selectedPanda" class="alert mt-4"
+               [class.alert-success]="!adoptionForm.selectedPanda.isBaby"
+               [class.alert-warning]="adoptionForm.selectedPanda.isBaby">
+            <div class="row align-items-center">
+              <div class="col-md-3 text-center">
+                <img [src]="adoptionForm.selectedPanda.image" 
+                     class="rounded-circle" 
+                     style="width: 80px; height: 80px; object-fit: cover;">
+                <div *ngIf="adoptionForm.selectedPanda.isBaby" class="mt-2">
+                  <span class="badge bg-warning">
+                    <i class="fas fa-baby me-1"></i>Recién Nacido
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <h6 class="mb-1">
+                  <i class="fas fa-heart text-danger me-2"></i>
+                  Has elegido a {{adoptionForm.selectedPanda.name}}
+                  <span *ngIf="adoptionForm.selectedPanda.isBaby" class="text-warning">
+                    <i class="fas fa-star ms-2"></i>
+                  </span>
+                </h6>
+                <p class="mb-2">
+                  {{adoptionForm.selectedPanda.personality}} • {{adoptionForm.selectedPanda.age}} • {{adoptionForm.selectedPanda.location}}
+                </p>
+                
+                <!-- Información especial para bebés -->
+                <div *ngIf="adoptionForm.selectedPanda.isBaby">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <small class="text-muted">
+                        <i class="fas fa-calendar me-1"></i> 
+                        <strong>Nacimiento:</strong> {{adoptionForm.selectedPanda.birthDate}}
+                      </small>
+                    </div>
+                    <div class="col-md-6" *ngIf="adoptionForm.selectedPanda.mother">
+                      <small class="text-muted">
+                        <i class="fas fa-heart me-1"></i> 
+                        <strong>Madre:</strong> {{adoptionForm.selectedPanda.mother}}
+                      </small>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <small class="text-warning">
+                      <i class="fas fa-info-circle me-1"></i>
+                      <strong>Nota:</strong> La adopción de pandas bebés incluye un seguimiento especial de 6 meses.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 2: Datos Personales -->
+        <div *ngIf="currentStep === 2">
+          <h5 class="mb-4 text-center">
+            <i class="fas fa-user text-primary me-2"></i>
+            Información Personal
+          </h5>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nombre *</label>
+              <input type="text" class="form-control" [(ngModel)]="adoptionForm.personalInfo.firstName"
+                     placeholder="Tu nombre" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Apellidos *</label>
+              <input type="text" class="form-control" [(ngModel)]="adoptionForm.personalInfo.lastName"
+                     placeholder="Tus apellidos" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email *</label>
+              <input type="email" class="form-control" [(ngModel)]="adoptionForm.personalInfo.email"
+                     placeholder="tu@email.com" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Teléfono *</label>
+              <input type="tel" class="form-control" [(ngModel)]="adoptionForm.personalInfo.phone"
+                     placeholder="+34 600 000 000" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">País</label>
+              <select class="form-select" [(ngModel)]="adoptionForm.personalInfo.country">
+                <option value="">Selecciona tu país</option>
+                <option value="ES">España</option>
+                <option value="MX">México</option>
+                <option value="AR">Argentina</option>
+                <option value="CO">Colombia</option>
+                <option value="CL">Chile</option>
+                <option value="PE">Perú</option>
+                <option value="Other">Otro</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Dirección</label>
+              <input type="text" class="form-control" [(ngModel)]="adoptionForm.personalInfo.address"
+                     placeholder="Tu dirección postal">
+            </div>
+          </div>
+
+          <div class="alert alert-info">
+            <div class="row align-items-center">
+              <div class="col-md-3 text-center">
+                <i class="fas fa-shield-alt fa-3x text-primary"></i>
+              </div>
+              <div class="col-md-9">
+                <h6>Protección de Datos</h6>
+                <small>Tus datos están completamente seguros y solo se utilizarán para gestionar tu adopción y enviarte actualizaciones de tu panda adoptado.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 3: Información de Pago -->
+        <div *ngIf="currentStep === 3">
+          <h5 class="mb-4 text-center">
+            <i class="fas fa-credit-card text-warning me-2"></i>
+            Información de Pago
+          </h5>
+
+          <!-- Resumen de la Adopción -->
+          <div class="card bg-light mb-4">
+            <div class="card-body">
+              <h6 class="card-title">Resumen de tu Adopción</h6>
+              <div class="row">
+                <div class="col-md-4 text-center">
+                  <img [src]="adoptionForm.selectedPanda?.image"
+                       class="rounded-circle mb-2"
+                       style="width: 60px; height: 60px; object-fit: cover;">
+                  <div><strong>{{adoptionForm.selectedPanda?.name}}</strong></div>
+                </div>
+                <div class="col-md-4">
+                  <div><strong>Plan:</strong> {{getPlanName()}}</div>
+                  <div><strong>Precio:</strong> {{getPlanPrice()}}/mes</div>
+                  <div><strong>Padrino:</strong> {{adoptionForm.personalInfo.firstName}} {{adoptionForm.personalInfo.lastName}}</div>
+                </div>
+                <div class="col-md-4 text-end">
+                  <div class="display-6 fw-bold text-success">{{getPlanPrice()}}</div>
+                  <small class="text-muted">por mes</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Métodos de Pago -->
+          <div class="mb-3">
+            <label class="form-label">Método de Pago</label>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="paymentMethod"
+                         value="card" [(ngModel)]="adoptionForm.paymentInfo.method" id="paymentCard">
+                  <label class="form-check-label" for="paymentCard">
+                    <i class="fas fa-credit-card me-2"></i>Tarjeta de Crédito/Débito
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="paymentMethod"
+                         value="paypal" [(ngModel)]="adoptionForm.paymentInfo.method" id="paymentPaypal">
+                  <label class="form-check-label" for="paymentPaypal">
+                    <i class="fab fa-paypal me-2"></i>PayPal
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="paymentMethod"
+                         value="transfer" [(ngModel)]="adoptionForm.paymentInfo.method" id="paymentTransfer">
+                  <label class="form-check-label" for="paymentTransfer">
+                    <i class="fas fa-university me-2"></i>Transferencia
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulario de Tarjeta -->
+          <div *ngIf="adoptionForm.paymentInfo.method === 'card'">
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label class="form-label">Nombre en la Tarjeta *</label>
+                <input type="text" class="form-control" [(ngModel)]="adoptionForm.paymentInfo.cardName"
+                       placeholder="Nombre como aparece en la tarjeta" required>
+              </div>
+              <div class="col-md-8 mb-3">
+                <label class="form-label">Número de Tarjeta *</label>
+                <input type="text" class="form-control" [(ngModel)]="adoptionForm.paymentInfo.cardNumber"
+                       placeholder="1234 5678 9012 3456" maxlength="19" required>
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="form-label">MM/AA *</label>
+                <input type="text" class="form-control" [(ngModel)]="adoptionForm.paymentInfo.expiryDate"
+                       placeholder="12/25" maxlength="5" required>
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="form-label">CVV *</label>
+                <input type="text" class="form-control" [(ngModel)]="adoptionForm.paymentInfo.cvv"
+                       placeholder="123" maxlength="4" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información PayPal -->
+          <div *ngIf="adoptionForm.paymentInfo.method === 'paypal'" class="alert alert-info">
+            <i class="fab fa-paypal fa-2x float-start me-3"></i>
+            <div>
+              <strong>Pago con PayPal</strong><br>
+              Serás redirigido a PayPal para completar el pago de forma segura.
+            </div>
+          </div>
+
+          <!-- Información Transferencia -->
+          <div *ngIf="adoptionForm.paymentInfo.method === 'transfer'" class="alert alert-info">
+            <i class="fas fa-university fa-2x float-start me-3"></i>
+            <div>
+              <strong>Pago por Transferencia</strong><br>
+              Te enviaremos los datos bancarios por email para realizar la transferencia.
+            </div>
+          </div>
+
+          <!-- Términos y Condiciones -->
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="acceptTerms" required>
+            <label class="form-check-label" for="acceptTerms">
+              Acepto los <a href="#" class="text-primary">términos y condiciones</a> y la
+              <a href="#" class="text-primary">política de privacidad</a>
+            </label>
+          </div>
+
+          <!-- Información de Seguridad -->
+          <div class="alert alert-success">
+            <div class="row align-items-center">
+              <div class="col-md-1 text-center">
+                <i class="fas fa-lock fa-2x"></i>
+              </div>
+              <div class="col-md-11">
+                <strong>Pago 100% Seguro</strong><br>
+                <small>Utilizamos encriptación SSL de 256 bits para proteger tu información. Todos los datos son procesados de forma segura.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer del Modal -->
+      <div class="modal-footer border-0 bg-light">
+        <div class="d-flex w-100 justify-content-between align-items-center">
+          <div>
+            <button *ngIf="currentStep > 1" type="button" class="btn btn-outline-secondary" (click)="prevStep()">
+              <i class="fas fa-arrow-left me-2"></i>Anterior
+            </button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-outline-danger me-2" (click)="closeModal()">
+              Cancelar
+            </button>
+            <button *ngIf="currentStep < 3" type="button" class="btn btn-success"
+                    [disabled]="(currentStep === 1 && !isStep1Valid()) || (currentStep === 2 && !isStep2Valid())"
+                    (click)="nextStep()">
+              Continuar <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+            <button *ngIf="currentStep === 3" type="button" class="btn btn-success btn-lg"
+                    [disabled]="!isStep3Valid()"
+                    (click)="processAdoption()">
+              <i class="fas fa-heart me-2"></i>Completar Adopción
+            </button>
+          </div>
         </div>
       </div>
     </div>
