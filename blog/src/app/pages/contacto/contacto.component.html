@@ -1,0 +1,402 @@
+<!-- Contact Page Header -->
+<div class="page-header mb-4">
+  <h1 class="display-4" style="color: #2E8B57;">
+    <i class="fas fa-envelope me-3"></i>
+    Contáctanos
+  </h1>
+  <p class="lead text-muted">¿Tienes preguntas sobre pandas? ¡Nos encantaría ayudarte!</p>
+</div>
+
+<!-- Opciones de Contacto Rápido -->
+<div class="row mb-5">
+  <div class="col-12">
+    <h3 class="text-center mb-4" style="color: #2E8B57;">
+      <i class="fas fa-question-circle me-2"></i>
+      ¿En qué podemos ayudarte?
+    </h3>
+  </div>
+</div>
+
+<div class="row mb-5">
+  <div class="col-md-3 mb-3">
+    <div class="card h-100 text-center border-success contact-option" data-type="info">
+      <div class="card-body">
+        <i class="fas fa-info-circle fa-3x text-success mb-3"></i>
+        <h6>Información General</h6>
+        <p class="small text-muted">Preguntas sobre pandas, conservación, datos científicos</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card h-100 text-center border-warning contact-option" data-type="tour">
+      <div class="card-body">
+        <i class="fas fa-plane fa-3x text-warning mb-3"></i>
+        <h6>Tours y Viajes</h6>
+        <p class="small text-muted">Reservas, itinerarios, recomendaciones de viaje</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card h-100 text-center border-danger contact-option" data-type="education">
+      <div class="card-body">
+        <i class="fas fa-graduation-cap fa-3x text-danger mb-3"></i>
+        <h6>Educación</h6>
+        <p class="small text-muted">Proyectos escolares, investigación, colaboraciones</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card h-100 text-center border-info contact-option" data-type="other">
+      <div class="card-body">
+        <i class="fas fa-comments fa-3x text-info mb-3"></i>
+        <h6>Otro</h6>
+        <p class="small text-muted">Sugerencias, colaboraciones, medios de comunicación</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Formulario de Contacto Mejorado -->
+<div class="row">
+  <div class="col-lg-8 mb-4">
+    <div class="card shadow-lg">
+      <div class="card-header text-center" style="background-color: #2E8B57; color: white;">
+        <h3><i class="fas fa-paper-plane me-2"></i>Envíanos un Mensaje</h3>
+        <p class="mb-0">Completa el formulario y te responderemos en menos de 24 horas</p>
+      </div>
+      <div class="card-body p-4">
+        <form id="contactForm">
+          <!-- Información Personal -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="firstName" class="form-label">
+                <i class="fas fa-user me-1 text-success"></i>Nombre *
+              </label>
+              <input type="text" class="form-control" id="firstName" name="firstName" required>
+              <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="lastName" class="form-label">
+                <i class="fas fa-user me-1 text-success"></i>Apellidos *
+              </label>
+              <input type="text" class="form-control" id="lastName" name="lastName" required>
+              <div class="invalid-feedback">Por favor ingresa tus apellidos.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label">
+                <i class="fas fa-envelope me-1 text-success"></i>Email *
+              </label>
+              <input type="email" class="form-control" id="email" name="email" required>
+              <div class="invalid-feedback">Por favor ingresa un email válido.</div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="phone" class="form-label">
+                <i class="fas fa-phone me-1 text-success"></i>Teléfono
+              </label>
+              <input type="tel" class="form-control" id="phone" name="phone">
+            </div>
+          </div>
+
+          <!-- Tipo de Consulta -->
+          <div class="mb-3">
+            <label for="inquiryType" class="form-label">
+              <i class="fas fa-list me-1 text-success"></i>Tipo de Consulta *
+            </label>
+            <select class="form-select" id="inquiryType" name="inquiryType" required>
+              <option value="">Selecciona el tipo de consulta...</option>
+              <option value="info">Información General sobre Pandas</option>
+              <option value="tour">Tours y Viajes</option>
+              <option value="education">Proyectos Educativos</option>
+              <option value="collaboration">Colaboraciones</option>
+              <option value="media">Medios de Comunicación</option>
+              <option value="technical">Soporte Técnico del Sitio</option>
+              <option value="other">Otro</option>
+            </select>
+            <div class="invalid-feedback">Por favor selecciona un tipo de consulta.</div>
+          </div>
+
+          <!-- Prioridad -->
+          <div class="mb-3">
+            <label class="form-label">
+              <i class="fas fa-exclamation-triangle me-1 text-warning"></i>Prioridad
+            </label>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="priority" id="lowPriority" value="low" checked>
+                  <label class="form-check-label text-success" for="lowPriority">
+                    <i class="fas fa-circle me-1"></i>Baja
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="priority" id="mediumPriority" value="medium">
+                  <label class="form-check-label text-warning" for="mediumPriority">
+                    <i class="fas fa-circle me-1"></i>Media
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="priority" id="highPriority" value="high">
+                  <label class="form-check-label text-danger" for="highPriority">
+                    <i class="fas fa-circle me-1"></i>Alta
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Asunto -->
+          <div class="mb-3">
+            <label for="subject" class="form-label">
+              <i class="fas fa-tag me-1 text-success"></i>Asunto *
+            </label>
+            <input type="text" class="form-control" id="subject" name="subject"
+                   placeholder="Ej: Consulta sobre tour de pandas en China" required>
+            <div class="invalid-feedback">Por favor ingresa un asunto.</div>
+          </div>
+
+          <!-- Mensaje -->
+          <div class="mb-3">
+            <label for="message" class="form-label">
+              <i class="fas fa-comment me-1 text-success"></i>Mensaje *
+            </label>
+            <textarea class="form-control" id="message" name="message" rows="6"
+                      placeholder="Cuéntanos en detalle tu consulta o pregunta..." required></textarea>
+            <div class="invalid-feedback">Por favor ingresa tu mensaje.</div>
+            <div class="form-text">
+              <small><span id="charCount">0</span>/1000 caracteres</small>
+            </div>
+          </div>
+
+          <!-- Preferencias de Contacto -->
+          <div class="mb-3">
+            <label class="form-label">
+              <i class="fas fa-phone-volume me-1 text-info"></i>Preferencia de Contacto
+            </label>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="contactEmail" name="contactPreference" value="email" checked>
+                  <label class="form-check-label" for="contactEmail">
+                    <i class="fas fa-envelope me-1 text-success"></i>Email
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="contactPhone" name="contactPreference" value="phone">
+                  <label class="form-check-label" for="contactPhone">
+                    <i class="fas fa-phone me-1 text-success"></i>Teléfono
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Términos y Condiciones -->
+          <div class="mb-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+              <label class="form-check-label" for="terms">
+                Acepto los <a href="#" class="text-success">términos y condiciones</a> y la
+                <a href="#" class="text-success">política de privacidad</a> *
+              </label>
+              <div class="invalid-feedback">Debes aceptar los términos y condiciones.</div>
+            </div>
+          </div>
+
+          <!-- Botones -->
+          <div class="row">
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-lg w-100" style="background-color: #2E8B57; color: white;">
+                <i class="fas fa-paper-plane me-2"></i>
+                Enviar Mensaje
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button type="reset" class="btn btn-outline-secondary btn-lg w-100">
+                <i class="fas fa-undo me-2"></i>
+                Limpiar Formulario
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Mensaje de Confirmación (oculto inicialmente) -->
+        <div id="successMessage" class="alert alert-success mt-4" style="display: none;">
+          <i class="fas fa-check-circle me-2"></i>
+          <strong>¡Mensaje enviado exitosamente!</strong> Te responderemos pronto.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información de Contacto -->
+  <div class="col-lg-4">
+    <div class="card shadow-lg">
+      <div class="card-header text-center" style="background-color: #FF6B35; color: white;">
+        <h5><i class="fas fa-info-circle me-2"></i>Información de Contacto</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-4">
+          <i class="fas fa-map-marker-alt text-danger me-2"></i>
+          <strong>Dirección:</strong><br>
+          <small class="text-muted">
+            Centro de Investigación Panda<br>
+            Av. Conservación 123<br>
+            Ciudad de México, CDMX 12345
+          </small>
+        </div>
+
+        <div class="mb-4">
+          <i class="fas fa-phone text-success me-2"></i>
+          <strong>Teléfono:</strong><br>
+          <small class="text-muted">+52 (55) 1234-5678</small>
+        </div>
+
+        <div class="mb-4">
+          <i class="fas fa-envelope text-primary me-2"></i>
+          <strong>Email:</strong><br>
+          <small class="text-muted">info&#64;pandablog.com</small>
+        </div>
+
+        <div class="mb-4">
+          <i class="fas fa-clock text-warning me-2"></i>
+          <strong>Horario de Atención:</strong><br>
+          <small class="text-muted">
+            Lunes a Viernes: 9:00 AM - 6:00 PM<br>
+            Sábados: 10:00 AM - 2:00 PM<br>
+            Domingos: Cerrado
+          </small>
+        </div>
+
+        <div class="mb-4">
+          <i class="fas fa-reply text-info me-2"></i>
+          <strong>Tiempo de Respuesta:</strong><br>
+          <small class="text-muted">
+            Email: Dentro de 24 horas<br>
+            Teléfono: Inmediato (horario de oficina)
+          </small>
+        </div>
+
+        <hr>
+
+        <h6 class="mb-3">
+          <i class="fas fa-share-alt me-2"></i>
+          Síguenos en Redes Sociales
+        </h6>
+        <div class="d-flex justify-content-around">
+          <a href="#" class="btn btn-outline-primary btn-sm">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="btn btn-outline-info btn-sm">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="btn btn-outline-danger btn-sm">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="btn btn-outline-dark btn-sm">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="#" class="btn btn-outline-success btn-sm">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+
+        <hr class="mt-4">
+
+        <!-- FAQ Rápido -->
+        <h6 class="mb-3">
+          <i class="fas fa-question-circle me-2"></i>
+          Preguntas Frecuentes
+        </h6>
+        <div class="accordion accordion-flush" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                ¿Cuánto cuesta un tour a China?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <small>Los tours a China para ver pandas van desde $1,299 por 7 días. Incluye alojamiento, guía y visitas a centros de investigación.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                ¿Cuál es la mejor época para viajar?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <small>Para China: Marzo-Mayo y Septiembre-Noviembre. Para Nepal: Octubre-Abril. Evita las temporadas de lluvia.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript para funcionalidad del formulario -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Contador de caracteres
+    const messageTextarea = document.getElementById('message');
+    const charCount = document.getElementById('charCount');
+
+    messageTextarea.addEventListener('input', function() {
+        const count = this.value.length;
+        charCount.textContent = count;
+
+        if (count > 1000) {
+            charCount.style.color = 'red';
+        } else {
+            charCount.style.color = '';
+        }
+    });
+
+    // Selección de tipo de consulta con cards
+    const contactOptions = document.querySelectorAll('.contact-option');
+    const inquiryTypeSelect = document.getElementById('inquiryType');
+
+    contactOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const type = this.dataset.type;
+            inquiryTypeSelect.value = type;
+
+            // Highlight visual
+            contactOptions.forEach(opt => opt.classList.remove('border-3'));
+            this.classList.add('border-3');
+        });
+    });
+
+    // Validación del formulario
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        if (this.checkValidity()) {
+            // Simular envío
+            document.getElementById('successMessage').style.display = 'block';
+            this.reset();
+            charCount.textContent = '0';
+
+            // Scroll al mensaje de éxito
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        this.classList.add('was-validated');
+    });
+});
+</script>
