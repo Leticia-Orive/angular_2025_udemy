@@ -1,0 +1,16 @@
+<nav>
+  <h1>🚀 Fullstack App - Angular + Node.js + MySQL</h1>
+  <div class="nav-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+    <a routerLink="/users" routerLinkActive="active">Usuarios</a>
+    <a routerLink="/products" routerLinkActive="active">Productos</a>
+  </div>
+</nav>
+
+<main>
+  <router-outlet />
+</main>
+
+<footer>
+  <p>© 2025 - Proyecto Fullstack sin Docker</p>
+</footer>

@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="header">
+    <h2>📦 Gestión de Productos</h2>
+    <button class="btn-add" (click)="showForm = !showForm">
+      {{ showForm ? '❌ Cancelar' : '➕ Nuevo Producto' }}
+    </button>
+  </div>
+
+  @if (showForm) {
+    <div class="form-card">
+      <h3>{{ isEditing ? 'Editar Producto' : 'Nuevo Producto' }}</h3>
+      <form (ngSubmit)="saveProduct()">
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" [(ngModel)]="currentProduct.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Descripción:</label>
+          <textarea [(ngModel)]="currentProduct.description" name="description" rows="3" required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Precio:</label>
+            <input type="number" [(ngModel)]="currentProduct.price" name="price" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label>Stock:</label>
+            <input type="number" [(ngModel)]="currentProduct.stock" name="stock" required>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-save">💾 Guardar</button>
+          <button type="button" class="btn-cancel" (click)="cancelEdit()">❌ Cancelar</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  @if (loading) {
+    <div class="loading">Cargando productos...</div>
+  }
+
+  @if (error) {
+    <div class="error">{{ error }}</div>
+  }
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products; track product.id) {
+          <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>\${{ product.price | number:'1.2-2' }}</td>
+            <td>
+              <span [class.low-stock]="product.stock < 10">{{ product.stock }}</span>
+            </td>
+            <td class="actions">
+              <button class="btn-edit" (click)="editProduct(product)">✏️ Editar</button>
+              <button class="btn-delete" (click)="deleteProduct(product.id!)">🗑️ Eliminar</button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td colspan="6" class="no-data">No hay productos registrados</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

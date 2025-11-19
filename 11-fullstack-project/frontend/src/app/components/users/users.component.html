@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="header">
+    <h2>👥 Gestión de Usuarios</h2>
+    <button class="btn-add" (click)="showForm = !showForm">
+      {{ showForm ? '❌ Cancelar' : '➕ Nuevo Usuario' }}
+    </button>
+  </div>
+
+  @if (showForm) {
+    <div class="form-card">
+      <h3>{{ isEditing ? 'Editar Usuario' : 'Nuevo Usuario' }}</h3>
+      <form (ngSubmit)="saveUser()">
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" [(ngModel)]="currentUser.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Email:</label>
+          <input type="email" [(ngModel)]="currentUser.email" name="email" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-save">💾 Guardar</button>
+          <button type="button" class="btn-cancel" (click)="cancelEdit()">❌ Cancelar</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  @if (loading) {
+    <div class="loading">Cargando usuarios...</div>
+  }
+
+  @if (error) {
+    <div class="error">{{ error }}</div>
+  }
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users; track user.id) {
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td class="actions">
+              <button class="btn-edit" (click)="editUser(user)">✏️ Editar</button>
+              <button class="btn-delete" (click)="deleteUser(user.id!)">🗑️ Eliminar</button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td colspan="4" class="no-data">No hay usuarios registrados</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
