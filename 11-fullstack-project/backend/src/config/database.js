@@ -1,3 +1,25 @@
+/**
+ * CONFIGURACIÓN DE BASE DE DATOS
+ * ===============================
+ * 
+ * Funcionalidad:
+ * - Establece conexión con MySQL usando mysql2
+ * - Crea un pool de conexiones para mejor rendimiento
+ * - Usa promesas para trabajar con async/await
+ * 
+ * Características:
+ * - Pool de 10 conexiones simultáneas máximo
+ * - Charset UTF8MB4 para soportar emojis
+ * - Reconexión automática si se pierde la conexión
+ * - Variables de entorno desde archivo .env
+ * 
+ * Configuración:
+ * - Host: localhost
+ * - Puerto: 3306 (por defecto MySQL)
+ * - Base de datos: fullstack_db
+ * - Usuario y contraseña desde .env
+ */
+
 const mysql = require('mysql2');
 require('dotenv').config();
 
@@ -10,7 +32,8 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  charset: 'utf8mb4'
 });
 
 // Promisify para usar async/await

@@ -1,9 +1,17 @@
 <div class="container">
+  @if (!authService.isLoggedIn()) {
+    <div class="info-message">
+      ℹ️ Puedes comprar sin registrarte, pero <a routerLink="/login">inicia sesión</a> o <a routerLink="/register">regístrate</a> para obtener <strong>descuentos exclusivos</strong> y <strong>puntos de recompensa</strong> 🎁
+    </div>
+  }
+
   <div class="header">
-    <h2>📦 Gestión de Productos</h2>
-    <button class="btn-add" (click)="showForm = !showForm">
-      {{ showForm ? '❌ Cancelar' : '➕ Nuevo Producto' }}
-    </button>
+    <h2>📦 {{ authService.isAdmin() ? 'Gestión de Productos' : 'Catálogo de Productos' }}</h2>
+    @if (authService.isAdmin()) {
+      <button class="btn-add" (click)="showForm = !showForm">
+        {{ showForm ? '❌ Cancelar' : '➕ Nuevo Producto' }}
+      </button>
+    }
   </div>
 
   @if (showForm) {
@@ -17,6 +25,10 @@
         <div class="form-group">
           <label>Descripción:</label>
           <textarea [(ngModel)]="currentProduct.description" name="description" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>URL de Imagen:</label>
+          <input type="url" [(ngModel)]="currentProduct.image_url" name="image_url" placeholder="https://ejemplo.com/imagen.jpg">
         </div>
         <div class="form-row">
           <div class="form-group">
@@ -48,7 +60,9 @@
     <table>
       <thead>
         <tr>
+          <th>Imagen</th>
           <th>ID</th>
+          <th>Categoría</th>
           <th>Nombre</th>
           <th>Descripción</th>
           <th>Precio</th>
@@ -59,7 +73,21 @@
       <tbody>
         @for (product of products; track product.id) {
           <tr>
+            <td>
+              @if (product.image_url) {
+                <img [src]="product.image_url" [alt]="product.name" class="product-image">
+              } @else {
+                <div class="no-image">📦</div>
+              }
+            </td>
             <td>{{ product.id }}</td>
+            <td>
+              @if (product.category_name) {
+                <span class="category-badge">{{ product.category_name }}</span>
+              } @else {
+                <span class="category-badge no-category">Sin categoría</span>
+              }
+            </td>
             <td>{{ product.name }}</td>
             <td>{{ product.description }}</td>
             <td>\${{ product.price | number:'1.2-2' }}</td>
@@ -67,17 +95,66 @@
               <span [class.low-stock]="product.stock < 10">{{ product.stock }}</span>
             </td>
             <td class="actions">
-              <button class="btn-edit" (click)="editProduct(product)">✏️ Editar</button>
-              <button class="btn-delete" (click)="deleteProduct(product.id!)">🗑️ Eliminar</button>
+              <!-- Todos pueden agregar al carrito -->
+              <button class="btn-cart" (click)="addToCart(product)">🛒 Agregar</button>
+
+              <!-- Solo admin puede editar y eliminar productos -->
+              @if (authService.isAdmin()) {
+                <button class="btn-edit" (click)="editProduct(product)">✏️ Editar</button>
+                <button class="btn-delete" (click)="deleteProduct(product.id!)">🗑️ Eliminar</button>
+              }
             </td>
           </tr>
         }
         @empty {
           <tr>
-            <td colspan="6" class="no-data">No hay productos registrados</td>
+            <td colspan="7" class="no-data">No hay productos registrados</td>
           </tr>
         }
       </tbody>
     </table>
   </div>
 </div>
+
+<!-- Modal para agregar al carrito -->
+@if (showCartModal && selectedProduct) {
+  <div class="modal-overlay" (click)="closeCartModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>🛒 Agregar al Carrito</h3>
+        <button class="btn-close" (click)="closeCartModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="product-preview">
+          @if (selectedProduct.image_url) {
+            <img [src]="selectedProduct.image_url" [alt]="selectedProduct.name" class="preview-image">
+          } @else {
+            <div class="preview-no-image">📦</div>
+          }
+          <div class="preview-info">
+            <h4>{{ selectedProduct.name }}</h4>
+            <p class="preview-description">{{ selectedProduct.description }}</p>
+            <p class="preview-price">${{ selectedProduct.price | number:'1.2-2' }}</p>
+            <p class="preview-stock">Stock disponible: {{ selectedProduct.stock }}</p>
+          </div>
+        </div>
+
+        <div class="quantity-selector">
+          <label>Cantidad:</label>
+          <div class="quantity-controls-modal">
+            <button (click)="decreaseQuantity()" class="btn-qty-modal" [disabled]="quantityToAdd <= 1">−</button>
+            <input type="number" [(ngModel)]="quantityToAdd" name="quantity" min="1" [max]="selectedProduct.stock" class="quantity-input">
+            <button (click)="increaseQuantity()" class="btn-qty-modal" [disabled]="quantityToAdd >= selectedProduct.stock">+</button>
+          </div>
+          <p class="total-preview">Total: ${{ (selectedProduct.price * quantityToAdd) | number:'1.2-2' }}</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel-modal" (click)="closeCartModal()">Cancelar</button>
+        <button class="btn-confirm-modal" (click)="confirmAddToCart()">Agregar al Carrito</button>
+      </div>
+    </div>
+  </div>
+}

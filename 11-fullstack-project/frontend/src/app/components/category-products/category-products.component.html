@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="category-header">
+    <a routerLink="/categories" class="back-link">← Volver a Categorías</a>
+    @if (category) {
+      <div class="category-info">
+        <span class="category-icon-large">{{ getCategoryIcon() }}</span>
+        <div>
+          <h1>{{ category.name }}</h1>
+          <p>{{ category.description }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (loading) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Cargando productos...</p>
+    </div>
+  } @else {
+    @if (products.length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <p>No hay productos en esta categoría</p>
+        <a routerLink="/categories" class="btn-primary">Ver Otras Categorías</a>
+      </div>
+    } @else {
+      <div class="products-grid">
+        @for (product of products; track product.id) {
+          <div class="product-card">
+            @if (product.image_url) {
+              <img [src]="product.image_url" [alt]="product.name" class="product-image">
+            } @else {
+              <div class="no-image">Sin imagen</div>
+            }
+
+            <div class="product-info">
+              <h3>{{ product.name }}</h3>
+              <p class="description">{{ product.description }}</p>
+
+              <div class="product-footer">
+                <div class="price-stock">
+                  <span class="price">${{ product.price }}</span>
+                  <span class="stock" [class.out-of-stock]="product.stock === 0">
+                    {{ product.stock > 0 ? 'Stock: ' + product.stock : 'Agotado' }}
+                  </span>
+                </div>
+
+                <div class="actions">
+                  @if (authService.isAdmin()) {
+                    <button class="btn-edit" title="Editar">✏️</button>
+                    <button class="btn-delete" (click)="deleteProduct(product.id)" title="Eliminar">🗑️</button>
+                  }
+
+                  @if (!authService.isAdmin() && product.stock > 0) {
+                    <button class="btn-cart" (click)="openCartModal(product)">
+                      🛒 Agregar
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- Modal para seleccionar cantidad -->
+  @if (showCartModal && selectedProduct) {
+    <div class="modal-overlay" (click)="closeCartModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <h3>Agregar al Carrito</h3>
+
+        <div class="modal-product">
+          @if (selectedProduct.image_url) {
+            <img [src]="selectedProduct.image_url" [alt]="selectedProduct.name">
+          }
+          <div>
+            <h4>{{ selectedProduct.name }}</h4>
+            <p class="modal-price">${{ selectedProduct.price }}</p>
+          </div>
+        </div>
+
+        <div class="quantity-selector">
+          <label>Cantidad:</label>
+          <div class="quantity-controls-modal">
+            <button (click)="decreaseQuantity()" [disabled]="quantityToAdd <= 1">-</button>
+            <input type="number" [(ngModel)]="quantityToAdd" min="1" [max]="selectedProduct.stock" readonly>
+            <button (click)="increaseQuantity()" [disabled]="quantityToAdd >= selectedProduct.stock">+</button>
+          </div>
+          <span class="stock-info">Stock disponible: {{ selectedProduct.stock }}</span>
+        </div>
+
+        <div class="modal-total">
+          <span>Total:</span>
+          <span class="total-price">${{ (selectedProduct.price * quantityToAdd).toFixed(2) }}</span>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" (click)="closeCartModal()">Cancelar</button>
+          <button class="btn-confirm" (click)="confirmAddToCart()">Agregar al Carrito</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

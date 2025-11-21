@@ -1,6 +1,17 @@
 <div class="container">
   <h2>Bienvenido al Proyecto Fullstack</h2>
 
+  @if (!authService.isLoggedIn()) {
+    <div class="promo-banner">
+      <div class="promo-icon">🎁</div>
+      <div class="promo-content">
+        <h3>¡Regístrate y Ahorra!</h3>
+        <p>Obtén <strong>10% de descuento</strong> en todas tus compras + <strong>puntos de recompensa</strong></p>
+        <a routerLink="/register" class="btn-promo">Crear Cuenta Gratis</a>
+      </div>
+    </div>
+  }
+
   <div class="hero">
     <div class="icon">🚀</div>
     <h1>Angular + Node.js + MySQL</h1>
@@ -27,6 +38,39 @@
     </div>
   </div>
 
+  <div class="categories-section">
+    <h3>🛍️ Explora Nuestras Categorías</h3>
+    <div class="categories-preview">
+      <a routerLink="/category/1" class="category-mini">
+        <span class="cat-icon">💻</span>
+        <span>Electrónica</span>
+      </a>
+      <a routerLink="/category/2" class="category-mini">
+        <span class="cat-icon">👕</span>
+        <span>Ropa</span>
+      </a>
+      <a routerLink="/category/3" class="category-mini">
+        <span class="cat-icon">🍕</span>
+        <span>Alimentos</span>
+      </a>
+      <a routerLink="/category/4" class="category-mini">
+        <span class="cat-icon">⚽</span>
+        <span>Deportes</span>
+      </a>
+      <a routerLink="/category/5" class="category-mini">
+        <span class="cat-icon">🏠</span>
+        <span>Hogar</span>
+      </a>
+      <a routerLink="/category/6" class="category-mini">
+        <span class="cat-icon">📚</span>
+        <span>Libros</span>
+      </a>
+    </div>
+    <div class="view-all">
+      <a routerLink="/categories" class="btn-view-all">Ver Todas las Categorías →</a>
+    </div>
+  </div>
+
   <div class="quick-start">
     <h3>Inicio Rápido</h3>
     <ul>
@@ -34,6 +78,7 @@
       <li>✅ Frontend Angular con routing</li>
       <li>✅ Gestión de Usuarios y Productos</li>
       <li>✅ Base de datos MySQL lista para usar</li>
+      <li>✅ Sistema de categorías implementado</li>
     </ul>
   </div>
 </div>

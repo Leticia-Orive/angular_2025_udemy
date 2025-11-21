@@ -1,0 +1,28 @@
+<div class="container">
+  <h2>Categorías de Productos</h2>
+
+  @if (loading) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Cargando categorías...</p>
+    </div>
+  } @else {
+    <div class="categories-grid">
+      @for (category of categories; track category.id) {
+        <a [routerLink]="['/category', category.id]" class="category-card">
+          <div class="category-icon" [innerHTML]="getCategoryIcon(category)"></div>
+          <h3>{{ category.name }}</h3>
+          <p>{{ category.description }}</p>
+          <span class="view-products">Ver Productos →</span>
+        </a>
+      }
+    </div>
+  }
+
+  @if (!loading && categories.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <p>No hay categorías disponibles</p>
+    </div>
+  }
+</div>

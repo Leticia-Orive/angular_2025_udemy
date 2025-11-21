@@ -1,9 +1,33 @@
 <nav>
-  <h1>🚀 Fullstack App - Angular + Node.js + MySQL</h1>
-  <div class="nav-links">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
-    <a routerLink="/users" routerLinkActive="active">Usuarios</a>
-    <a routerLink="/products" routerLinkActive="active">Productos</a>
+  <h1>🚀 Fullstack App </h1>
+  <div class="nav-container">
+    <div class="nav-links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+      <a routerLink="/categories" routerLinkActive="active">Categorías</a>
+      <a routerLink="/products" routerLinkActive="active">Productos</a>
+      @if (currentUser?.role === 'admin') {
+        <a routerLink="/users" routerLinkActive="active">Usuarios</a>
+      }
+    </div>
+    <div class="auth-links">
+      <a routerLink="/cart" routerLinkActive="active" class="cart-link">
+        🛒 Carrito
+        <span class="cart-badge">{{ cartItemCount }}</span>
+      </a>
+
+      @if (currentUser) {
+        <span class="user-info">
+          👤 {{ currentUser.name }}
+          @if (currentUser.role === 'admin') {
+            <span class="role-badge">ADMIN</span>
+          }
+        </span>
+        <button class="btn-logout" (click)="logout()">🚪 Salir</button>
+      } @else {
+        <a routerLink="/login" routerLinkActive="active" class="auth-link">🔐 Login</a>
+        <a routerLink="/register" routerLinkActive="active" class="auth-link">📝 Registro</a>
+      }
+    </div>
   </div>
 </nav>
 

@@ -1,0 +1,208 @@
+<div class="cart-container">
+  <div class="cart-header">
+    <h2>🛒 Carrito de Compras</h2>
+    @if (cartItems.length > 0) {
+      <button class="btn-clear" (click)="clearCart()">🗑️ Vaciar Carrito</button>
+    }
+  </div>
+
+  @if (cartItems.length === 0) {
+    <div class="empty-cart">
+      <p>🛒 Tu carrito está vacío</p>
+      <p class="empty-subtitle">Agrega productos desde la sección de productos</p>
+    </div>
+  } @else {
+    <div class="cart-items">
+      @for (item of cartItems; track item.product.id) {
+        <div class="cart-item">
+          @if (item.product.image_url) {
+            <img [src]="item.product.image_url" [alt]="item.product.name" class="item-image">
+          } @else {
+            <div class="no-image">📦</div>
+          }
+
+          <div class="item-details">
+            <h3>{{ item.product.name }}</h3>
+            <p class="item-description">{{ item.product.description }}</p>
+            <p class="item-price">${{ item.product.price | number:'1.2-2' }}</p>
+          </div>
+
+          <div class="item-actions">
+            <div class="quantity-controls">
+              <button (click)="decreaseQuantity(item.product.id!, item.quantity)" class="btn-qty">−</button>
+              <span class="quantity">{{ item.quantity }}</span>
+              <button (click)="increaseQuantity(item.product.id!, item.quantity)" class="btn-qty">+</button>
+            </div>
+            <p class="item-total">${{ (item.product.price * item.quantity) | number:'1.2-2' }}</p>
+            <button (click)="removeItem(item.product.id!)" class="btn-remove">🗑️</button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span>Total de productos:</span>
+        <strong>{{ totalItems }}</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Subtotal:</span>
+        <strong>${{ totalPrice | number:'1.2-2' }}</strong>
+      </div>
+
+      @if (authService.isLoggedIn()) {
+        <div class="summary-row discount">
+          <span>🎁 Descuento ({{ DISCOUNT_PERCENTAGE }}%):</span>
+          <strong class="discount-amount">-${{ discount | number:'1.2-2' }}</strong>
+        </div>
+        <div class="summary-row total">
+          <span>Total a pagar:</span>
+          <strong>${{ finalPrice | number:'1.2-2' }}</strong>
+        </div>
+        <div class="points-info">
+          ⭐ Ganarás <strong>{{ pointsEarned }} puntos</strong> con esta compra
+        </div>
+      } @else {
+        <div class="summary-row total">
+          <span>Total a pagar:</span>
+          <strong>${{ totalPrice | number:'1.2-2' }}</strong>
+        </div>
+        <div class="guest-info">
+          ℹ️ <a routerLink="/login">Inicia sesión</a> para obtener <strong>{{ DISCOUNT_PERCENTAGE }}% de descuento</strong> y ganar puntos
+        </div>
+      }
+
+      <button class="btn-checkout" (click)="checkout()">💳 Proceder al Pago</button>
+    </div>
+  }
+
+  <!-- Modal de Pago -->
+  @if (showPaymentModal) {
+    <div class="modal-overlay" (click)="closePaymentModal()">
+      <div class="modal-payment" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>💳 Información de Pago</h2>
+          <button class="btn-close" (click)="closePaymentModal()">✕</button>
+        </div>
+
+        <div class="payment-summary">
+          <div class="summary-item">
+            <span>Subtotal:</span>
+            <span>${{ totalPrice | number:'1.2-2' }}</span>
+          </div>
+          @if (authService.isLoggedIn() && discount > 0) {
+            <div class="summary-item discount">
+              <span>Descuento ({{ DISCOUNT_PERCENTAGE }}%):</span>
+              <span>-${{ discount | number:'1.2-2' }}</span>
+            </div>
+          }
+          <div class="summary-item total">
+            <span>Total a Pagar:</span>
+            <strong>${{ finalPrice | number:'1.2-2' }}</strong>
+          </div>
+        </div>
+
+        <form class="payment-form" (ngSubmit)="processPayment()">
+          <div class="form-group">
+            <label>Método de Pago</label>
+            <div class="payment-methods">
+              <label class="payment-method-option">
+                <input type="radio" name="paymentMethod" [(ngModel)]="paymentData.paymentMethod" value="credit" checked>
+                <span>💳 Crédito</span>
+              </label>
+              <label class="payment-method-option">
+                <input type="radio" name="paymentMethod" [(ngModel)]="paymentData.paymentMethod" value="debit">
+                <span>💳 Débito</span>
+              </label>
+              <label class="payment-method-option">
+                <input type="radio" name="paymentMethod" [(ngModel)]="paymentData.paymentMethod" value="bizum">
+                <span>📱 Bizum</span>
+              </label>
+            </div>
+          </div>
+
+          @if (paymentData.paymentMethod === 'bizum') {
+            <div class="bizum-section">
+              <div class="bizum-info">
+                <p>📱 Recibirás una notificación en tu móvil para confirmar el pago</p>
+              </div>
+              <div class="form-group">
+                <label for="bizumPhone">Número de Teléfono</label>
+                <input
+                  type="tel"
+                  id="bizumPhone"
+                  [(ngModel)]="paymentData.bizumPhone"
+                  name="bizumPhone"
+                  placeholder="612345678"
+                  maxlength="9"
+                  pattern="[0-9]*"
+                  required>
+              </div>
+            </div>
+          } @else {
+            <div class="card-section">
+              <div class="form-group">
+                <label for="cardNumber">Número de Tarjeta</label>
+                <input
+                  type="text"
+                  id="cardNumber"
+                  [(ngModel)]="paymentData.cardNumber"
+                  name="cardNumber"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="19"
+                  (input)="formatCardNumber($event)"
+                  required>
+              </div>
+
+              <div class="form-group">
+                <label for="cardHolder">Titular de la Tarjeta</label>
+                <input
+                  type="text"
+                  id="cardHolder"
+                  [(ngModel)]="paymentData.cardHolder"
+                  name="cardHolder"
+                  placeholder="NOMBRE COMPLETO"
+                  style="text-transform: uppercase"
+                  required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expiryDate">Fecha de Vencimiento</label>
+                  <input
+                    type="text"
+                    id="expiryDate"
+                    [(ngModel)]="paymentData.expiryDate"
+                    name="expiryDate"
+                    placeholder="MM/AA"
+                    maxlength="5"
+                    (input)="formatExpiryDate($event)"
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input
+                    type="text"
+                    id="cvv"
+                    [(ngModel)]="paymentData.cvv"
+                    name="cvv"
+                    placeholder="123"
+                    maxlength="4"
+                    pattern="[0-9]*"
+                    required>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" (click)="closePaymentModal()">Cancelar</button>
+            <button type="submit" class="btn-pay">💰 Pagar ${{ finalPrice | number:'1.2-2' }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>
